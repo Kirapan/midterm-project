@@ -14,18 +14,20 @@ module.exports = (knex) => {
     });
   });
   
-  router.get("votes/:id", (req, res) => {
-    console.log(req.params.id);
+  router.get("/votes/:id", (req, res) => {
     knex
-      .select('polls.name','options.name')
+      .select('polls.name as pollsname','options.name as optionsname')
       .from("polls")
-      .where('id',req.params.id)
-      .innerjoin('options', 'polls.id', '=', 'options.poll_id')
+      .innerJoin('options', 'polls.id', '=', 'options.poll_id')
+      .where('polls.id',req.params.id)
       .then((results) => {
         res.json(results);
-        console.log(results);
       });
   });
+
+  rounter.post('/new', (req, res) => {
+    
+  })
 
 
   return router;
