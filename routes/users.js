@@ -25,9 +25,9 @@ module.exports = (knex) => {
       });
   });
 
-  rounter.post('/new', (req, res) => {
+  // rounter.post('/new', (req, res) => {
     
-  })
+  // })
 
 
   return router;
