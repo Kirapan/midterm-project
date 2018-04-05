@@ -44,6 +44,7 @@ $(() => {
 
 
 
+
 $("#createPoll").on('click', () => {
     $("#formPoll").slideToggle();
 });
@@ -87,3 +88,16 @@ $("#formPoll").on('submit', (event)=>{
       i++;
 })
 });
+
+$("#createPoll").on('submit', (event)=>{
+event.preventDefault();
+$("#formPoll").slideToggle();
+  $.ajax({
+    method: "post",
+    url: "/api/polls/new"
+  }).done((result) => {
+    loadPoll();
+    })
+});
+
+
