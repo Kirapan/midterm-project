@@ -1,56 +1,27 @@
 $(document).ready(()=>{
-  //Getting the informations to edit page
-  $(() => {
+  var option = [];
+
+  //voting page
+  function createVote (id, content) {
+    return `<div class="drag" option_id="${id}">${content}</div>`
+  }
+  function createBox (i,point) {
+    return `<div class="drop" point="${point}">Rank ${i}</div>`
+  }
+
+  
     $.ajax({
       method: "GET",
-      url: `/api/polls/edit/`,
-      success: function(polls){
-              $("div.options").append(`<label for="exampleInputEmail1">
-                              Your title is
-                            </label>
-                       <input type="text" class="form-control" id="pollTitle"
-                          aria-describedby="emailHelp" placeholder="Enter the Title" 
-                          value="${pollid.optionsname}">
-                      <br/><input type="email" class="form-control" id="useremail" 
-                      aria-describedby="emailHelp" value="${pollid.useremail}">
-                      ${polls.forEach((poll) => {
-                          if(poll.id === pollid) {
-                            let infoPoll = {
-                              title: poll.name,
-                              options: getPollinfor(pollid),
-                            };
-                          }
-                        })
-                      }`);
-              } 
-      });
+      url: "/api/polls/vote/",
+      success: ((results) => {
+        createVote()//results.id, results.content)
+        createBox()//results.id, results.point)
+      })
+    }).done((poll) => {
+
+    });
   });
-  
-  const getPollinfor = (poll) => {
-  $("div.options").append(`<label for="exampleInputEmail1">
-                              Your title is
-                            </label>
-                       <input type="text" class="form-control" id="pollTitle"
-               aria-describedby="emailHelp" placeholder="Enter the Title" value="${pollid.name}">
-                      <label for="exampleInputEmail1">Your Email address</label>
-              <input type="email" class="form-control" id="useremail" aria-describedby="emailHelp" value="${pollid.email}">
-                  <br/><label for="inputOption">Option ${pollid.optionid}</label>
-                   <input type="option" 
-                  id="input${pollid.optionid}" class="form-control" 
-                  placeholder="What are your options ?">
-                                </div>
-                  </div>
-              </div>`);
-  }
-  
-  // Editing page
-  $("#editPoll").on('submit', function(event){
-    event.preventDefault();
-    $.ajax({
-      method: "POST",
-      url: `/api/polls/edit/:${pollid}`
-    })
-  })
+
   
   //Deleting a poll 
   // ...
@@ -60,7 +31,7 @@ $(document).ready(()=>{
                   <div class="thumbnail">
                       <img src="http://placehold.it/800x500" alt="">
                       <div class="caption">
-                          <a href="/api/polls/votes/${poll.id}"><h3>${poll.name}</h3></a>
+                          <a href="/api/polls/result/${poll.poll_id}" pollid="${poll.poll_id}" optionid="${poll.id}" rank="${poll.options.rank}"><h3>${poll.pollname}</h3></a>
                           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                           <p>
                               <a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
@@ -86,31 +57,22 @@ $(document).ready(()=>{
    event.preventDefault();
    option.push($(`#input${i}`).val());
    // alert("working")
-   let title = $("#pollTitle").val();
-   let userEmail = $("#useremail").val();
+  //  let title = $("#pollTitle").val();
+  //  let userEmail = $("#useremail").val();
   
-   let pollInfo = {
-                    name: title, 
-                    email: userEmail,
-                    options: option
-                   };
+  //  let pollInfo = {
+  //                   name: title, 
+  //                   email: userEmail,
+  //                   options: option
+  //                  };
   
-        if (!pollInfo.name || !pollInfo.email || !pollInfo.options) {
-            alert("working!")
-        }else{
-   if (!useremail) {
-    alert("Hey, We need your email!");
-  
-   }
-     $.ajax({
-      method: "POST",
-      url: "/api/polls/new",
-      data: pollInfo
-    }).done((result) => {
-      console.log("POSTED!");
-      });
-        }
-    });
+    if (!pollInfo.name || !pollInfo.email || !pollInfo.options) {
+        alert("working!")
+    } else {
+      if (!useremail) {
+        alert("Hey, We need your email!");
+      }
+
    let title = $("#pollTitle").val();
    let userEmail = $("#useremail").val();
    
@@ -119,10 +81,19 @@ $(document).ready(()=>{
                     email: userEmail,
                     options: option
                    };
-  console.log(pollInfo)
-  });
+  console.log(pollInfo);
   
-  var option = [];
+      $.ajax({
+        method: "POST",
+        url: "/api/polls/new",
+        data: pollInfo
+      }).done((result) => {
+        console.log("POSTED!");
+      });
+    }
+  });
+
+
   let i = 1;
   //Adding options to the poll
   $("#addOption").on('click', function(){
@@ -140,7 +111,37 @@ $(document).ready(()=>{
         placeholder="What are your options ?">`);
     }
   });
+
+
+  const getPollinfor = (poll) => {
+    $("div.options").append(`<label for="exampleInputEmail1">
+                                Your title is
+                              </label>
+                         <input type="text" class="form-control" id="pollTitle"
+                 aria-describedby="emailHelp" placeholder="Enter the Title" value="${pollid.name}">
+                        <label for="exampleInputEmail1">Your Email address</label>
+                <input type="email" class="form-control" id="useremail" aria-describedby="emailHelp" value="${pollid.email}">
+                    <br/><label for="inputOption">Option ${pollid.optionid}</label>
+                     <input type="option" 
+                    id="input${pollid.optionid}" class="form-control" 
+                    placeholder="What are your options ?">
+                                  </div>
+                    </div>
+                </div>`);
+    }
+    
+    // Editing page
+    $("#editPoll").on('submit', function(event){
+      event.preventDefault();
+      $.ajax({
+        method: "POST",
+        url: `/api/polls/edit/:${pollid}`
+      })
+    })
+
+
   //Editing the Poll
+
   
   
   //test to be updated
