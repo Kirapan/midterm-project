@@ -234,7 +234,9 @@ module.exports = (knex) => {
 
     let options = req.body;
     let optionArray = options.options;
-    console.log(optionsArray);
+
+    console.log(optionArray);
+
     savePolls(options)
     .returning('id')
     .then(function(id){  
@@ -243,11 +245,10 @@ module.exports = (knex) => {
         knex('options')
         .insert({poll_id: id, name: option})
         .then (function (result) {
-          console.log('result',result);
         })
         .catch(function(err){})
       })
-      res.send();
+      //res.send();
     })
     .catch(function (err) {
       res.status(400).send(err);
@@ -320,6 +321,5 @@ module.exports = (knex) => {
 
   return router;
 };
-
 
 
