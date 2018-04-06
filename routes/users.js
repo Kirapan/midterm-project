@@ -243,11 +243,10 @@ module.exports = (knex) => {
         knex('options')
         .insert({poll_id: id, name: option})
         .then (function (result) {
-          console.log('result',result);
         })
         .catch(function(err){})
       })
-      res.send();
+      // res.send();
     })
     .catch(function (err) {
       res.status(400).send(err);
