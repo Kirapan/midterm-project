@@ -1,29 +1,89 @@
  // options.push($(".input1").val())
+ 
 $(document).ready(()=>{
 
 
-// $('#seeResult').mousedown(()=>{
-//   $("#realResults").scrollIntoView({behavior: "instant"});
-// });
+//Getting the informations to edit page
 
-// $("ul.nav li a").click(function(event) {
-//     // event.preventDefault();
-//     alert("heeeey");
-//     $('body').scrollTo('#realResults');
-//   });
+$(() => {
+  $.ajax({
+    method: "GET",
+    url: `/api/polls/edit/`,
+    success: function(polls){
+            $("div.options").append(`<label for="exampleInputEmail1">
+                            Your title is
+                          </label>
+                     <input type="text" class="form-control" id="pollTitle"
+                        aria-describedby="emailHelp" placeholder="Enter the Title" 
+                        value="${pollid.optionsname}">
+                    <br/><input type="email" class="form-control" id="useremail" 
+                    aria-describedby="emailHelp" value="${pollid.useremail}">
+                    ${polls.forEach((poll) => {
+                        if(poll.id === pollid) {
+                          let infoPoll = {
+                            title: poll.name,
+                            options: getPollinfor(pollid),
+                          };
+                        }
+                      })
+                    }`);
+            } 
+    });
+});
 
-// $('#seeResult').click(function () {
-//     $("html, body").animate({
-//         scrollTop: $("realResults")
-//     }, 600);
-//     return false;
-// });
+
+const getPollinfor = (poll) => {
+
+$("div.options").append(`<label for="exampleInputEmail1">
+                            Your title is
+                          </label>
+                     <input type="text" class="form-control" id="pollTitle"
+             aria-describedby="emailHelp" placeholder="Enter the Title" value="${pollid.name}">
+                    <label for="exampleInputEmail1">Your Email address</label>
+            <input type="email" class="form-control" id="useremail" aria-describedby="emailHelp" value="${pollid.email}">
+                <br/><label for="inputOption">Option ${pollid.optionid}</label>
+                 <input type="option" 
+                id="input${pollid.optionid}" class="form-control" 
+                placeholder="What are your options ?">
+                              </div>
+                </div>
+            </div>`);
+
+
+}
+
+// Editing page
+$("#editPoll").on('submit', function(event){
+  event.preventDefault();
+
+  $.ajax({
+    method: "POST",
+    url: `/api/polls/edit/:${pollid}`
+  })
+
+})
+
+
+
+
+
+
+
+//Deleting a poll 
+
+
+
+
+
+
+
+//Creating all the polls and sending to the index.ejs
 const generateDiv = (poll) =>{
    $("div.features").append(`<div class="col-md-3 col-sm-6 hero-feature">
                 <div class="thumbnail">
                     <img src="http://placehold.it/800x500" alt="">
                     <div class="caption">
-                        <h3>${poll.name}</h3>
+                        <a href="/api/polls/votes/${poll.id}"><h3>${poll.name}</h3></a>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                         <p>
                             <a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
@@ -32,7 +92,7 @@ const generateDiv = (poll) =>{
                 </div>
             </div>`);
 }
-
+//Rendering the Polls on the index.ejs
 $(() => {
   $.ajax({
     method: "GET",
@@ -45,7 +105,7 @@ $(() => {
 });
 
 
-
+//Creating a new poll
 $("#newPoll").on('submit', (event)=>{
  event.preventDefault();
  option.push($(`#input${i}`).val());
@@ -59,6 +119,10 @@ $("#newPoll").on('submit', (event)=>{
                   options: option
                  };
 
+      if (!pollInfo.name || !pollInfo.email || !pollInfo.options) {
+          alert("working!")
+      }else{
+        
 console.log('beep', pollInfo);
  if (!useremail) {
   alert("Hey, We need your email!");
@@ -72,6 +136,7 @@ console.log('beep', pollInfo);
     console.log("POSTED!");
     });
 
+      }
 
 
 
@@ -89,7 +154,7 @@ console.log(pollInfo)
 
 var option = [];
 let i = 1;
-
+//Adding options to the poll
 $("#addOption").on('click', function(){
   function input(number) {
     return `input${number}`;
@@ -110,6 +175,9 @@ $("#addOption").on('click', function(){
       placeholder="What are your options ?">`);
   }
 });
+//Editing the Poll
+
+
 
 
 

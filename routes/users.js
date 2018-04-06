@@ -6,12 +6,12 @@ const router = express.Router();
 module.exports = (knex) => {
 
   function getPolls(id) {
-    return knex
-      .select('options.name as optionname', 'options.rank', 'polls.name as pollname')
-      .from('polls')
-      .rightOuterJoin('options')
-      .where('id', id).andWhere('polls.id', 'options.poll_id');
-  }
+   return knex
+     .select('options.name as optionsname', 'options.rank', 'polls.name as pollname', 'polls.email as useremail')
+     .from('polls')
+     .rightOuterJoin('options', 'polls.id', '=', 'options.poll_id')
+     .where('polls.id', id)
+ }
   
   function savePolls(data) {
     return knex('polls')
@@ -112,7 +112,7 @@ module.exports = (knex) => {
 
   router.get("/all", (req, res) => {
     knex
-      .select("name")
+      .select("name", "id")
       .from("polls")
       .then((results) => {
         res.json(results);
@@ -126,7 +126,8 @@ module.exports = (knex) => {
       .rightOuterJoin('options', 'polls.id', '=', 'options.poll_id')
       .where('polls.id', req.params.id)
       .then((results) => {
-        res.json(results);
+        // res.json(results);
+        res.render("votes");
       });
   });
 
@@ -203,8 +204,55 @@ module.exports = (knex) => {
       })
     })
 
+//Adding the Edit Page
+
+
+  router.get('/edit/:id', (req, res) => {
+    
+    getPolls(req.params.id)
+    .then((poll) => {
+          res.render("edit", poll);
+        })
+     // knex
+     //  .select()
+     //  .from("polls") //Need to talk about the editing 
+     //    .then((poll) => {
+     //      res.json(poll);
+     //      // res.render(results)
+     //    })
+      .catch(err=>{
+           
+           res.status(400).send(err);
+      });
+    });
+
+  // router.get('/edit', (req, res) => {
+    
+  //   res.render("edit")
+  //   });
+
+
+
+
+  // router.get('/edit/:id', (req, res) => {
+  //   let templateVars = {};
+  //    knex
+  //     .select()
+  //     .from("polls")
+  //     .where("id", req.params.id) //Need to talk about the editing 
+  //       .then((results) => {
+        
+  //         // res.json(templateVars);
+  //         res.render("edit", results)
+  //       })
+  //     .catch(err=>{
+           
+  //          res.status(400).send(err);
+  //     }); 
+  //   });
+
 
   return router;
-}
+};
 
 
