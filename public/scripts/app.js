@@ -1,10 +1,5 @@
- // options.push($(".input1").val())
- 
 $(document).ready(()=>{
-
-
 //Getting the informations to edit page
-
 $(() => {
   $.ajax({
     method: "GET",
@@ -31,9 +26,7 @@ $(() => {
     });
 });
 
-
 const getPollinfor = (poll) => {
-
 $("div.options").append(`<label for="exampleInputEmail1">
                             Your title is
                           </label>
@@ -48,35 +41,19 @@ $("div.options").append(`<label for="exampleInputEmail1">
                               </div>
                 </div>
             </div>`);
-
-
 }
 
 // Editing page
 $("#editPoll").on('submit', function(event){
   event.preventDefault();
-
   $.ajax({
     method: "POST",
     url: `/api/polls/edit/:${pollid}`
   })
-
 })
 
-
-
-
-
-
-
 //Deleting a poll 
-
-
-
-
-
-
-
+// ...
 //Creating all the polls and sending to the index.ejs
 const generateDiv = (poll) =>{
    $("div.features").append(`<div class="col-md-3 col-sm-6 hero-feature">
@@ -104,7 +81,6 @@ $(() => {
   });
 });
 
-
 //Creating a new poll
 $("#newPoll").on('submit', (event)=>{
  event.preventDefault();
@@ -122,8 +98,6 @@ $("#newPoll").on('submit', (event)=>{
       if (!pollInfo.name || !pollInfo.email || !pollInfo.options) {
           alert("working!")
       }else{
-        
-console.log('beep', pollInfo);
  if (!useremail) {
   alert("Hey, We need your email!");
 
@@ -135,11 +109,7 @@ console.log('beep', pollInfo);
   }).done((result) => {
     console.log("POSTED!");
     });
-
       }
-
-
-
   });
  let title = $("#pollTitle").val();
  let userEmail = $("#useremail").val();
@@ -159,15 +129,10 @@ $("#addOption").on('click', function(){
   function input(number) {
     return `input${number}`;
   }
-
   let checkinField = $(`#${input(i)}`).val();
-  
   checkinField.length > 0 && option.push(checkinField);
-  
   if(!checkinField) {
-  
     alert("Cmon man, that one is empty!! why do you need more ?...")
-    
   } else {
     $(".askButton").before(`<br/><label for="inputOption">Option ${1+i}</label>
        <input type="option" 
@@ -176,9 +141,6 @@ $("#addOption").on('click', function(){
   }
 });
 //Editing the Poll
-
-
-
 
 
 //test to be updated
@@ -194,7 +156,6 @@ $(()=>
   })
   });
 
-
 $("#removeOption").on('click', function(){
   // alert("working");
   $(`#input${i}`).empty();
@@ -204,7 +165,6 @@ $("#removeOption").on('click', function(){
 $("#createPoll").on('submit', (event)=>{
 event.preventDefault();
 $("#formPoll").slideToggle();
- 
 });
 
 
