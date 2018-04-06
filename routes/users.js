@@ -7,10 +7,10 @@ module.exports = (knex) => {
 
   function getPolls(id) {
     return knex
-      .select('options.name as optionname', 'options.rank', 'polls.name as pollname')
+      .select('options.name as optionsname', 'options.rank', 'polls.name as pollname','polls.email as useremail')
       .from('polls')
-      .rightOuterJoin('options')
-      .where('id', id).andWhere('polls.id', 'options.poll_id');
+      .rightOuterJoin('options', 'polls.id', '=', 'options.poll_id')
+      .where('polls.id', id)
   }
   
   function savePolls(data) {
@@ -100,25 +100,58 @@ module.exports = (knex) => {
     })
   }
   
-  function votesCaculator (arrayOfArrays) {
-    arrayOfArrays.forEach(function (array) {
-      let i = array.length - 1;
+  function votesCaculator (votesArr) {
+    let votes = 
+    votes.forEach(function (voteObj) {
+      let vote = [];
+      for (let key in voteObj) {
+        vote.push(voteObj[key]);
+      }
   
     })
   }
   
-  
+  function saveOptions(id, arr) {
+    return new Promise(function(resolve, reject)
+    { 
+      if(!arr || !id) {
+        return reject(err);
+      }
+      else {
+        arr.forEach((option) => {
+          knex('options')
+          .insert({poll_id: id, name: option})
+        })
+        return resolve(arr);
+      }
+    });
+  }
 
+  function rankUp (array){
+    return new Promise (function (resolve, regject) {
+      if (!arr) {
+        return reject(err);
+      }
+      else {
+        arr.forEach(function (obj) {
+          knex('options')
+          .where('id', Object.keys(obj))
+          .increment('rank',obj[Object.keys(obj)])
+        })
+        return resolve(arr);
+      }
+    })
+  }
 
   router.get("/all", (req, res) => {
     knex
-      .select("name")
+      .select("name","id")
       .from("polls")
       .then((results) => {
         res.json(results);
       });
   });
-
+//works
   router.get("/votes/:id", (req, res) => {
     knex
       .select('polls.name as pollsname', 'options.name as optionsname')
@@ -126,20 +159,26 @@ module.exports = (knex) => {
       .rightOuterJoin('options', 'polls.id', '=', 'options.poll_id')
       .where('polls.id', req.params.id)
       .then((results) => {
-        res.json(results);
+        res.send(results);
       });
   });
 
-
-  //need a votes post! to calculate the points
   router.post("/votes/:id", (req, res) => {
-
+    let arr = req.body;
+    rankUp(arr)
+    .then(function (result){
+      res.send(result);
+    })
+    .catch (function(err){
+      res.status(400).send(err);
+    })
+      
   })
-
+//works
   router.get('/result/:id', (req, res) => {
     getPolls(req.params.id)
       .then(function (output) {
-        res.json(result);
+        res.send(output);
       })
       .catch(function (err) {
         res.status(400).send(err);
@@ -149,24 +188,20 @@ module.exports = (knex) => {
   router.post('/new', (req, res) => {
     let options = req.body;
     let optionArray = options.options;
+    console.log("app",optionArray);
     savePolls(options)
     .returning('id')
-    .then(function(id){     
-      console.log('nope',id);
-      optionArray.forEach((option) => {
-        knex('options')
-        .insert({poll_id: id, name: option})
-        .then (function (result) {
-          
-        })
-        .catch(function (err){
-          // res.status(400).send(err);
-        })
+    .then(function(id){ 
+      console.log("id",id); 
+      saveOptions(id,optionArray)
+      .returning('*')
+      .then(function (result){
+        console.log(result);
+        res.send(result).redirect("/all");
+        
       })
-      res.send();
     })
     .catch(function (err) {
-      console.log('nope!!!', err)
       res.status(400).send(err);
     })
   })
@@ -174,9 +209,19 @@ module.exports = (knex) => {
   router.delete('/delete/:id', (req, res) => {
     findAndDelete(req.params.id, req.params.email)
     .then(function () {
-      res.send();
+      res.redirect("/all");
     })
     .catch(function (err) {
+      res.status(400).send(err);
+    })
+  })
+//works
+  router.get('/edit/:id', (req, res) => {
+    getPolls(req.params.id)
+    .then(function (result) {
+      res.send(result);
+    })
+    .catch(function (err){
       res.status(400).send(err);
     })
   })
@@ -192,7 +237,7 @@ module.exports = (knex) => {
       .then(function () {
         findAndUpdateOptions(req.params.id, data)
           .then(function (results) {
-            res.send(results);
+            res.send(results).redirect("/all");
           })
           .catch(function (err) {
             res.status(400).send(err);
@@ -203,8 +248,8 @@ module.exports = (knex) => {
       })
     })
 
-
   return router;
 }
+
 
 

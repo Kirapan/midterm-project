@@ -1,21 +1,23 @@
- // options.push($(".input1").val())
+// options.push($(".input1").val())
 $(document).ready(()=>{
-
-
-// $('#seeResult').mousedown(()=>{
-//   $("#realResults").scrollIntoView({behavior: "instant"});
-// });
-
-// $("ul.nav li a").click(function(event) {
-//     // event.preventDefault();
-//     alert("heeeey");
-//     $('body').scrollTo('#realResults');
-//   });
-
-// $('#seeResult').click(function () {
-//     $("html, body").animate({
-//         scrollTop: $("realResults")
-//     }, 600);
+  
+  
+    
+  
+  // $('#seeResult').mousedown(()=>{
+    //   $("#realResults").scrollIntoView({behavior: "instant"});
+    // });
+    
+    // $("ul.nav li a").click(function(event) {
+      //     // event.preventDefault();
+      //     alert("heeeey");
+      //     $('body').scrollTo('#realResults');
+      //   });
+      
+      // $('#seeResult').click(function () {
+        //     $("html, body").animate({
+          //         scrollTop: $("realResults")
+          //     }, 600);
 //     return false;
 // });
 const generateDiv = (poll) =>{
@@ -69,21 +71,22 @@ console.log('beep', pollInfo);
     url: "/api/polls/new",
     data: pollInfo
   }).done((result) => {
-    console.log("POSTED!");
-    });
-
-
-
-
+    console.log(result);
   });
- let title = $("#pollTitle").val();
- let userEmail = $("#useremail").val();
- 
- let pollInfo = {
-                  name: title, 
-                  email: userEmail,
-                  options: option
-                 };
+});
+  
+  
+  
+  
+
+let title = $("#pollTitle").val();
+let userEmail = $("#useremail").val();
+
+let pollInfo = {
+  name: title, 
+  email: userEmail,
+  options: option
+};
 console.log(pollInfo)
 });
 
@@ -112,6 +115,19 @@ $("#addOption").on('click', function(){
 });
 
 
+$("#removeOption").on('click', function(){
+  // alert("working");
+  $(`#input${i}`).empty();
+  i--;
+});
+
+$("#createPoll").on('submit', (event)=>{
+  event.preventDefault();
+  $("#formPoll").slideToggle();
+  
+});
+
+
 
 //test to be updated
 $(()=>
@@ -125,20 +141,3 @@ $(()=>
     }
   })
   });
-
-
-$("#removeOption").on('click', function(){
-  // alert("working");
-  $(`#input${i}`).empty();
-      i--;
-});
-  
-$("#createPoll").on('submit', (event)=>{
-event.preventDefault();
-$("#formPoll").slideToggle();
- 
-});
-
-
-
-
