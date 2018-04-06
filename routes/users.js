@@ -2,28 +2,71 @@
 
 const express = require('express');
 const router = express.Router();
+const api_key = 'key-f7f6501d5e7940f941c0ac33d20e40a7';
+const domain = 'sandboxc840785fd6244d16981cb9f613d95dca.mailgun.org';
+const mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
 
 module.exports = (knex) => {
 
   function getPolls(id) {
-   return knex
-     .select('options.name as optionsname', 'options.rank', 'polls.name as pollname', 'polls.email as useremail')
-     .from('polls')
-     .rightOuterJoin('options', 'polls.id', '=', 'options.poll_id')
-     .where('polls.id', id)
- }
-  
-  function savePolls(data) {
-    return knex('polls')
+    return knex
+      .select('options.*','polls.name as pollname','polls.email as email')
+      .from('options')
+      .join('polls', 'polls.id', '=', 'options.poll_id')
+      .then(function(options) {
+        const polls = [];
+        for (let i=0; i<options.length; i++) {
+          const existingPoll = polls.find(function(poll){return poll.poll_id === options[i].poll_id});
+          if(!existingPoll) {
+            // insert new poll
+            let poll = {
+              poll_id: options[i].poll_id,
+              pollname:options[i].pollname ,
+              email: options[i].email,
+              options: [
+               { optionid: options[i].id,rank: options[i].rank, name: options[i].name }
+              ]
+            };
+            polls.push(poll);
+          } else {
+            // add option to existing poll
+            let option = {
+              optionid: options[i].id,rank: options[i].rank, name: options[i].name
+            }
+            existingPoll.options.push(option);
+          }
+        }
+        return polls;
+      });
+    }
+    
+    function savePolls(data) {
+      return knex('polls')
       .insert({
         name: data.name, 
         email: data.email, 
         created_at: new Date().toISOString()
       })
-  }
-  
-  function deletePolls(id) {
-    return knex
+    }
+    
+    function saveOptions(id, arr) {
+      return new Promise(function(resolve, reject)
+      { 
+        if(!arr || !id) {
+          return reject(err);
+        }
+        else {
+          arr.forEach((option) => {
+            knex('options')
+            .insert({poll_id: id, name: option})
+          })
+          return resolve(arr);
+        }
+      });
+    }
+
+    function deletePolls(id) {
+      return knex
       .select()
       .from('polls')
       .where('id', id)
@@ -100,25 +143,45 @@ module.exports = (knex) => {
     })
   }
   
-  function votesCaculator (arrayOfArrays) {
-    arrayOfArrays.forEach(function (array) {
-      let i = array.length - 1;
+  function votesCaculator (votesArr) {
+    let votes = 
+    votes.forEach(function (voteObj) {
+      let vote = [];
+      for (let key in voteObj) {
+        vote.push(voteObj[key]);
+      }
   
     })
   }
   
-  
 
+  function rankUp (array){
+    return new Promise (function (resolve, regject) {
+      if (!arr) {
+        return reject(err);
+      }
+      else {
+        arr.forEach(function (obj) {
+          knex('options')
+          .where('id', Object.keys(obj))
+          .increment('rank',obj[Object.keys(obj)])
+        })
+        return resolve(arr);
+      }
+    })
+  }
 
   router.get("/all", (req, res) => {
-    knex
-      .select("name", "id")
-      .from("polls")
+      getPolls(req.params.id)
       .then((results) => {
         res.json(results);
-      });
+      })
+      .catch(function(err){
+        res.send(err);
+      })
   });
 
+//works
   router.get("/votes/:id", (req, res) => {
     knex
       .select('polls.name as pollsname', 'options.name as optionsname')
@@ -126,21 +189,26 @@ module.exports = (knex) => {
       .rightOuterJoin('options', 'polls.id', '=', 'options.poll_id')
       .where('polls.id', req.params.id)
       .then((results) => {
-        // res.json(results);
-        res.render("votes");
+        res.send(results).render("votes");
       });
   });
 
-
-  //need a votes post! to calculate the points
   router.post("/votes/:id", (req, res) => {
-
+    let arr = req.body;
+    rankUp(arr)
+    .then(function (result){
+      res.send(result);
+    })
+    .catch (function(err){
+      res.status(400).send(err);
+    })
+      
   })
-
+//works
   router.get('/result/:id', (req, res) => {
     getPolls(req.params.id)
       .then(function (output) {
-        res.json(result);
+        res.send(output);
       })
       .catch(function (err) {
         res.status(400).send(err);
@@ -148,36 +216,81 @@ module.exports = (knex) => {
   })
 
   router.post('/new', (req, res) => {
+    let useremail = req.body.email
+    console.log(useremail);
+      var data = {
+        from: `Chill Poll <${useremail}>`,
+        to: 'strangesm@gmail.com',
+        cc:'mateuscbraga@gmail.com',
+        subject: 'What to do on this friday ? (Title of the poll)',
+        text: 'You just got asked about Netflix for this friday! (here will be the link to vote)'
+        };
+      mailgun.messages().send(data, function (error, body) {
+        if (error) {
+        console.log(error)
+        }
+      console.log(body);
+      });
+
     let options = req.body;
     let optionArray = options.options;
+    console.log(optionArray);
     savePolls(options)
     .returning('id')
-    .then(function(id){     
-      console.log('nope',id);
+    .then(function(id){  
+      console.log(id);   
       optionArray.forEach((option) => {
         knex('options')
         .insert({poll_id: id, name: option})
         .then (function (result) {
-          
+          console.log('result',result);
         })
-        .catch(function (err){
-          // res.status(400).send(err);
-        })
+        .catch(function(err){})
       })
       res.send();
     })
     .catch(function (err) {
-      console.log('nope!!!', err)
       res.status(400).send(err);
     })
   })
 
+  // router.post('/new', (req, res) => {
+  //   let options = req.body;
+  //   let optionArray = options.options;
+  //   console.log("app",options);
+  //   savePolls(options)
+  //     .returning('id')
+  //     .then(function(id){
+  //       console.log("id",id);
+  //       saveOptions(id, optionArray)
+  //         .returning('*')
+  //         .then(function (result){
+  //           console.log(result);
+  //           res.redirect("/all");
+  //         })
+  //     })
+  //     .catch(function (err) {
+  //       console.log(err)
+  //       res.status(400).send(err);
+  //     })
+  // })
+
   router.delete('/delete/:id', (req, res) => {
     findAndDelete(req.params.id, req.params.email)
     .then(function () {
-      res.send();
+      res.redirect("/all");
     })
     .catch(function (err) {
+      res.status(400).send(err);
+    })
+  })
+//works
+  router.get('/edit/:id', (req, res) => {
+    getPolls(req.params.id)
+    .then(function (result) {
+      res.send(result).render('edit');
+    })
+    .catch(function (err){
       res.status(400).send(err);
     })
   })
@@ -193,7 +306,7 @@ module.exports = (knex) => {
       .then(function () {
         findAndUpdateOptions(req.params.id, data)
           .then(function (results) {
-            res.send(results);
+            res.send(results).redirect("/all");
           })
           .catch(function (err) {
             res.status(400).send(err);
@@ -203,53 +316,6 @@ module.exports = (knex) => {
         res.status(400).send(err);
       })
     })
-
-//Adding the Edit Page
-
-
-  router.get('/edit/:id', (req, res) => {
-    
-    getPolls(req.params.id)
-    .then((poll) => {
-          res.render("edit", poll);
-        })
-     // knex
-     //  .select()
-     //  .from("polls") //Need to talk about the editing 
-     //    .then((poll) => {
-     //      res.json(poll);
-     //      // res.render(results)
-     //    })
-      .catch(err=>{
-           
-           res.status(400).send(err);
-      });
-    });
-
-  // router.get('/edit', (req, res) => {
-    
-  //   res.render("edit")
-  //   });
-
-
-
-
-  // router.get('/edit/:id', (req, res) => {
-  //   let templateVars = {};
-  //    knex
-  //     .select()
-  //     .from("polls")
-  //     .where("id", req.params.id) //Need to talk about the editing 
-  //       .then((results) => {
-        
-  //         // res.json(templateVars);
-  //         res.render("edit", results)
-  //       })
-  //     .catch(err=>{
-           
-  //          res.status(400).send(err);
-  //     }); 
-  //   });
 
 
   return router;
