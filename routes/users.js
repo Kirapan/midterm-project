@@ -234,7 +234,9 @@ module.exports = (knex) => {
 
     let options = req.body;
     let optionArray = options.options;
+
     console.log(optionArray);
+
     savePolls(options)
     .returning('id')
     .then(function(id){  
