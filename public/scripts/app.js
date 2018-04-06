@@ -34,7 +34,7 @@ const generateDiv = (poll) =>{
 $(() => {
   $.ajax({
     method: "GET",
-    url: "/api/polls"
+    url: "/api/polls/all"
   }).done((polls) => {
     polls.forEach((poll) => {
       generateDiv(poll);
@@ -89,15 +89,16 @@ $("#formPoll").on('submit', (event)=>{
 })
 });
 
-$("#createPoll").on('submit', (event)=>{
-event.preventDefault();
-$("#formPoll").slideToggle();
-  $.ajax({
-    method: "post",
-    url: "/api/polls/new"
-  }).done((result) => {
-    loadPoll();
-    })
-});
 
-
+//test to be updated
+$(()=>
+  {
+  $('#testdrag').draggable();
+  $('#testdrop').droppable({
+    drop: function(event,ui) {
+      $(this).text('dropped');
+      let option = $('#testdrag').attr('option')
+      $(this).attr('option',option);
+    }
+  })
+  });
