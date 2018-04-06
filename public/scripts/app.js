@@ -1,4 +1,6 @@
+ // options.push($(".input1").val())
 $(document).ready(()=>{
+
 
 // $('#seeResult').mousedown(()=>{
 //   $("#realResults").scrollIntoView({behavior: "instant"});
@@ -34,7 +36,7 @@ const generateDiv = (poll) =>{
 $(() => {
   $.ajax({
     method: "GET",
-    url: "/api/polls"
+    url: "/api/polls/all"
   }).done((polls) => {
     polls.forEach((poll) => {
       generateDiv(poll);
@@ -44,60 +46,83 @@ $(() => {
 
 
 
-
-$("#createPoll").on('click', () => {
-    $("#formPoll").slideToggle();
-});
-
-
-  let i = 2;
-$("#formPoll").on('submit', (event)=>{
+$("#newPoll").on('submit', (event)=>{
  event.preventDefault();
-  // i.push(event);
-  let $data = {
-    option1: $('.op1').val(),
-  };
-  console.log($data)
+ option.push($(`#input${i}`).val());
+ // alert("working")
+ let title = $("#pollTitle").val();
+ let userEmail = $("#useremail").val();
 
-  let options = $(`.op${i}`).val();
-  // console.log(options);
-    // $data.options[i] = optioni.value
-  
-   $('form').append(`<div><input class='op${i}' name="option${i}" type='text' placeholder='Option ${i}'/></div>`)
-      
-    // let $data = {
-    //   name: event.body.titlePoll,
-    // }
+ let pollInfo = {
+                  name: title, 
+                  email: userEmail,
+                  options: option
+                 };
 
-    // console.log(event.body);
-  // $.ajax({
-  //   method: "POST",
-  //   url: "/api/polls/new",
-  //   data: 123,
-  //   success: function(data) {
-  //     // console.log(data);
-  //   }
+console.log('beep', pollInfo);
+ if (!useremail) {
+  alert("Hey, We need your email!");
 
-
-  // })
-// })
+ }
+   $.ajax({
+    method: "POST",
+    url: "/api/polls/new",
+    data: pollInfo
+  }).done((result) => {
+    console.log("POSTED!");
+    });
 
 
 
 
-      i++;
-})
+  });
+ let title = $("#pollTitle").val();
+ let userEmail = $("#useremail").val();
+ 
+ let pollInfo = {
+                  name: title, 
+                  email: userEmail,
+                  options: option
+                 };
+console.log(pollInfo)
 });
 
+var option = [];
+let i = 1;
+
+$("#addOption").on('click', function(){
+  function input(number) {
+    return `input${number}`;
+  }
+
+  let checkinField = $(`#${input(i)}`).val();
+  
+  checkinField.length > 0 && option.push(checkinField);
+  
+  if(!checkinField) {
+  
+    alert("Cmon man, that one is empty!! why do you need more ?...")
+    
+  } else {
+    $(".askButton").before(`<br/><label for="inputOption">Option ${1+i}</label>
+       <input type="option" 
+      id="${input(++i)}" class="form-control" 
+      placeholder="What are your options ?">`);
+  }
+});
+
+
+$("#removeOption").on('click', function(){
+  // alert("working");
+  $(`#input${i}`).empty();
+      i--;
+});
+  
 $("#createPoll").on('submit', (event)=>{
 event.preventDefault();
 $("#formPoll").slideToggle();
-  $.ajax({
-    method: "post",
-    url: "/api/polls/new"
-  }).done((result) => {
-    loadPoll();
-    })
+ 
 });
+
 
 

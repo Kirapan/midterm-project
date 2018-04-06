@@ -5,6 +5,76 @@ const router  = express.Router();
 
 module.exports = (knex) => {
 
+  function getPolls(id) {
+    return knex
+    .select('options.name as optionname','options.rank','polls.name as pollname')
+    .from('polls')
+    .rightOuterJoin('options')
+    .where('id',id).andWhere('polls.id','options.poll_id');
+  }
+
+  function savePolls (data) {
+    return knex('polls')
+      .insert({
+        name: data.name,
+        email: data.email,
+        created_at: new Date().toISOString()
+      })
+
+  }
+
+  function deletePolls (id) {
+    return knex
+    .select()
+    .from('polls')
+    .where('id',id)
+    .delete() 
+  }
+
+  function deleteOptions (id) {
+    return knex
+    .select()
+    .from('options')
+    .where('poll_id',id)
+    .delete()
+  }
+
+  function findAndUpdateOptions (pollid,data) {
+    return knex
+    .select()
+    .from('options')
+    .where('poll_id', pollid)
+    .then(function (result) {
+      result.forEach(function (option){
+        if (option.id === data.optionid) {
+          return knex('options')
+          .where('id',data.option.id)
+          .update({
+            name: data.name
+          })
+          .then(function () {
+            res.send();
+          })
+          .catch(function (err){
+            res.status(400).send(err);
+          })
+        } else {
+          return knex('options')
+          .insert({poll_id: pollid, name: data.name})
+          .then(function () {
+            res.send();
+          })
+          .catch(function (err){
+            res.status(400).send(err);
+          })
+        }
+      })
+    })
+    .catch (function (err){
+      res.status(400).send(err);
+    })
+  }
+
   router.get("/all", (req, res) => {
     knex
       .select("name")
@@ -25,7 +95,6 @@ module.exports = (knex) => {
       });
   });
 
-
   router.get('/result/:id', (req,res) => {
     getPolls(req.params.id)
     .then (function (output){
@@ -34,25 +103,29 @@ module.exports = (knex) => {
     .catch(function (err) {
       res.status(400).send(err);
     })
-  })
+  });
   
   router.post('/new', (req, res) => {
-    let options = req.body.options
-    savePolls
+    let options = req.body;
+    let optionArray = options.options;
+    savePolls(options)
     .returning('id')
-    .then(function(id){
-      options.forEach((option) => {
+    .then(function(id){     
+      console.log('nope',id);
+      optionArray.forEach((option) => {
         knex('options')
         .insert({poll_id: id, name: option})
-        .then(function (result) {
-          res.send();
+        .then (function (result) {
+          
         })
         .catch(function (err){
-          res.status(400).send(err);
+          // res.status(400).send(err);
         })
       })
+      res.send();
     })
     .catch(function (err) {
+      console.log('nope!!!', err)
       res.status(400).send(err);
     })
   })
@@ -108,74 +181,6 @@ module.exports = (knex) => {
     .catch(function (err){
       res.status(400).send(err);
     })
-  
-    
   })
   return router;
-}
-
-
-function getPolls(id) {
-  return knex
-  .select('options.name as optionname','options.rank','polls.name as pollname')
-  .from('polls')
-  .rightOuterJoin('options')
-  .where('id',id).andWhere('polls.id','options.poll_id');
-}
-
-function savePolls (data) {
-  return knex("polls")
-  .insert({name: data.name, email: data.email, created_at: Date.now()})
-}
-
-function deletePolls (id) {
-  return knex
-  .select()
-  .from('polls')
-  .where('id',id)
-  .delete() 
-}
-
-function deleteOptions (id) {
-  return knex
-  .select()
-  .from('options')
-  .where('poll_id',id)
-  .delete()
-}
-
-function findAndUpdateOptions (pollid,data) {
-  return knex
-  .select()
-  .from('options')
-  .where('poll_id', pollid)
-  .then(function (result) {
-    result.forEach(function (option){
-      if (option.id === data.optionid) {
-        return knex('options')
-        .where('id',data.option.id)
-        .update({
-          name: data.name
-        })
-        .then(function () {
-          res.send();
-        })
-        .catch(function (err){
-          res.status(400).send(err);
-        })
-      } else {
-        return knex('options')
-        .insert({poll_id: pollid, name: data.name})
-        .then(function () {
-          res.send();
-        })
-        .catch(function (err){
-          res.status(400).send(err);
-        })
-      }
-    })
-  })
-  .catch (function (err){
-    res.status(400).send(err);
-  })
 }
