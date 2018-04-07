@@ -28,10 +28,10 @@
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
-    <link rel="stylesheet" href="/styles/nav.css" type="text/css" />    
+    <link rel="stylesheet" href="/styles/nav.css" type="text/css" />
     <link rel="stylesheet" href="/styles/section.css" type="text/css" />
     <link rel="stylesheet" href="../public/styles/bootstrap.css" type="text/css">
-  <!--  <script type="text/javascript" src="/scripts/app.js"></script> -->
+    <!--  <script type="text/javascript" src="/scripts/app.js"></script> -->
     <link rel="stylesheet" href="/vendor/jquery-ui.min.css">
 </head>
 
@@ -56,7 +56,8 @@
                     <li>
                         <a id="#NewPoll" href="#createPoll">New Poll</a>
                     </li>
-                    <li><a id="#seeResult" href="#realResults">Results</a>
+                    <li>
+                        <a id="#seeResult" href="#realResults">Results</a>
                     </li>
                     <li>
                         <a href="#">About</a>
@@ -74,9 +75,11 @@
         <!-- Jumbotron Header -->
         <header class="jumbotron hero-spacer">
             <h1>Hey, What's up?!</h1>
-            <p>Wondering what to do on this monday night ? Ask your friends!
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, ipsam, eligendi, in quo sunt possimus non incidunt odit vero aliquid similique quaerat nam nobis illo aspernatur vitae fugiat numquam repellat.</p>
-            <p><a class="btn btn-primary btn-large">I want to ask them!</a>
+            <p>Wondering what to do on this monday night ? Ask your friends! Lorem ipsum dolor sit amet, consectetur adipisicing
+                elit. Ipsa, ipsam, eligendi, in quo sunt possimus non incidunt odit vero aliquid similique quaerat nam nobis
+                illo aspernatur vitae fugiat numquam repellat.</p>
+            <p>
+                <a class="btn btn-primary btn-large">I want to ask them!</a>
             </p>
 
             <p id="testdrag" option="1">drag</p>
@@ -103,13 +106,14 @@
                         <h3>Feature Label</h3>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                         <p>
-                            <a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
+                            <a href="#" class="btn btn-primary">Buy Now!</a>
+                            <a href="#" class="btn btn-default">More Info</a>
                         </p>
                     </div>
                 </div>
             </div>
 
-            
+
         </div>
         <!-- /.row -->
 
@@ -124,16 +128,18 @@
             </div>
         </footer>
 
-      </div>
+    </div>
 
     <div class="container 2" id="createPoll">
 
         <!-- Jumbotron Header -->
         <header class="jumbotron hero-spacer">
             <h1>So, everything you need to do is:</h1>
-            <p>Wondering what to do on this monday night ? Ask your friends!
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, ipsam, eligendi, in quo sunt possimus non incidunt odit vero aliquid similique quaerat nam nobis illo aspernatur vitae fugiat numquam repellat.</p>
-            <p><a class="btn btn-primary btn-large">I want to ask them!</a>
+            <p>Wondering what to do on this monday night ? Ask your friends! Lorem ipsum dolor sit amet, consectetur adipisicing
+                elit. Ipsa, ipsam, eligendi, in quo sunt possimus non incidunt odit vero aliquid similique quaerat nam nobis
+                illo aspernatur vitae fugiat numquam repellat.</p>
+            <p>
+                <a class="btn btn-primary btn-large">I want to ask them!</a>
             </p>
         </header>
 
@@ -149,19 +155,22 @@
 
         <!-- Page Features -->
         <div class="row text-center">
-         <form method="POST" id="newPoll">
-            <div class="form-group">
-                <label for="exampleInputEmail1">Type your title</label>
-                <input type="text" class="form-control" id="pollTitle" aria-describedby="emailHelp" placeholder="Enter the Title">
-           <label for="exampleInputEmail1">Your Email address</label>
-            <input type="email" class="form-control" id="useremail" aria-describedby="emailHelp" placeholder="Enter email">
-            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-             <br/><label for="inputOption">Option 1</label>
-            <input type="option" id="input1" class="form-control" placeholder="What are your options ?">
-            <input type="submit" class="form-control askButton" value="Ask them!">
-        </div>
-        </form> <button id="addOption" class="btn btn-primary btn-large">+</button><button id="removeOption" class="btn btn-danger btn-large">-</button>
-            
+            <form method="POST" id="newPoll">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Type your title</label>
+                    <input type="text" class="form-control" id="pollTitle" aria-describedby="emailHelp" placeholder="Enter the Title">
+                    <label for="exampleInputEmail1">Your Email address</label>
+                    <input type="email" class="form-control" id="useremail" aria-describedby="emailHelp" placeholder="Enter email">
+                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                    <br/>
+                    <label for="inputOption">Option 1</label>
+                    <input type="option" id="input1" class="form-control" placeholder="What are your options ?">
+                    <input type="submit" class="form-control askButton" value="Ask them!">
+                </div>
+            </form>
+            <button id="addOption" class="btn btn-primary btn-large">+</button>
+            <button id="removeOption" class="btn btn-danger btn-large">-</button>
+
         </div>
         <!-- /.row -->
 
@@ -176,11 +185,11 @@
             </div>
         </footer>
 
-      </div>
+    </div>
 
 
     </div>
-  
+
 
     </div>
 
@@ -193,9 +202,10 @@
 
     <script type="text/javascript" src="../public/scripts/bootstrap.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
+    <script type="text/javascript" src="/scripts/votes.js"></script>
     <!-- // <script type="text/javascript" src="../public/mailing.js"></script> -->
 
-    
+
 
 
 </body>

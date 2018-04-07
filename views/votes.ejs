@@ -36,7 +36,7 @@
 </head>
 
 <body>
- <div class="container 3" id="editPoll">
+ <div class="container 3" id="votepoll">
 
         <!-- Jumbotron Header -->
         <!-- <header class="jumbotron hero-spacer">
@@ -52,38 +52,26 @@
         <!-- Title -->
         <div class="row">
             <div class="col-lg-12">
-                <h3 id="realResults">Edit Poll   </h3>
+                <h3 id="realResults">It's time to vote!</h3>
             </div>
         </div>
-        <!-- /.row -->
-        <!-- Page Features -->
-        <div class="row text-center">
-         <form method="POST" id="editPoll">
-            <div class="form-group options">
-         
-         <label for="exampleInputEmail1"></label>
-                <input type="text" class="form-control" id="pollTitle" aria-describedby="emailHelp" placeholder="Enter the Title" value="OKAY">
-           <label for="exampleInputEmail1">Your Email address</label>
-            <input type="email" class="form-control" id="useremail" aria-describedby="emailHelp" placeholder="Enter email">
-            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-             <br/><label for="inputOption">Option 1</label>
-            <input type="option" id="input1" class="form-control" placeholder="What are your options ?">
-            <input type="submit" class="form-control askButton" value="Ask them!">
-
-
+        <!-- Voting -->
+        <div id="votescontainer">
+        <h1 class="unique" identifier=<%=results[0].pollid%>><%=results[0].pollsname%></h1>
+        <% results.forEach(function (obj) { %>
+            <div class="drag" pollid="<%=obj.pollid%>" optionid="<%=obj.optionid%>" style="width: 60px; height: 60px; border:1px solid black; display: inline-block;"><%= obj.optionsname %></div>
+        <% })%>
+        <% for (let i=1; i<=results.length; i++) {%>
+            <div class="drop" points="<%=results.length-i%>" style="width: 60px; height: 60px; border:1px solid black;  display: inline-block;"><%=`Rank ${i}`%></div>
+       <% } %>
         </div>
-        </form> <button id="addOption" class="btn btn-primary btn-large">+</button><button id="removeOption" class="btn btn-danger btn-large">-</button>
-            
-        </div>
-        <!-- /.row -->
-
-        <hr>
-
+        <button id="pollsubmit" type='button'>Vote!</button>
+       
         <!-- Footer -->
         <footer>
             <div class="row">
                 <div class="col-lg-12">
-                    <p>Copyright &copy; Your Website 2014</p>
+                    <p>Copyright &copy; ChillPoll 2018</p>
                 </div>
             </div>
         </footer>
@@ -104,7 +92,7 @@
     <!-- Bootstrap Core JavaScript -->
 
     <script type="text/javascript" src="../public/scripts/bootstrap.js"></script>
-    <script type="text/javascript" src="/scripts/app.js"></script>
+    <script type="text/javascript" src="/scripts/votes.js"></script>
 
 
 </body>
