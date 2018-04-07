@@ -27,8 +27,8 @@ const addOption = (poll) =>{
   poll.options.forEach(option =>{
    $("#useremail").after(`
       <label for="inputOption">Options</label>
-      <input type="option" id="${option.optionid}" class="form-control"
-       value="${option.name}"><br/>`);
+      <input type="option" id="input${option.optionid}" class="form-control"
+       value="${option.name}">${option.name}<br/>`);
       return;
   });
 };
@@ -43,37 +43,26 @@ const addOption = (poll) =>{
 
 //when the form is submited 
 
+
 var option = [];
-let i = 1;
-let title = $("#pollTitle").val();
 
 
 
+// let title = $("input#pollTitle").val();
  let pollInfo = {
-                  name: title, 
-                  options: option
+          name: $("input#pollTitle").val(), 
+          options: option
                  };
-//NOT WORKING YET
-$("#editPoll").on('submit', (event)=>{
-  event.preventDefault();
-    // alert("working");
-    $.ajax({
-      method: "POST",
-      url: "/api/polls/new",
-      data: pollInfo,
-    }).done((result)=>{
-      console.log("Updated");
-    });
-});
-
 //Adding Options in case the user want - NOT WORKING YET
+let i = 1;
 $("#addOption").on('click', function(){
   function input(number) {
     return `input${number}`;
   }
-  alert("working");
+  // alert("working");
+
   let checkinField = $(`#${input(i)}`).val();
-  checkinField.length > 0 && option.push(checkinField);
+  // checkinField.length > 0 && option.push(checkinField);
   if(!checkinField) {
     alert("Cmon man, that one is empty!! why do you need more ?...");
   } else {
@@ -83,6 +72,20 @@ $("#addOption").on('click', function(){
       placeholder="What are your options ?">`);
   }
 });
+//NOT WORKING YET
+$("#editPoll").on('submit', (event)=>{
+  console.log(pollInfo);
+  event.preventDefault();
+    // alert("working");
+    $.ajax({
+      method: "PUT",
+      url: `/api/polls/edit/${pollId}`,
+      data: pollInfo,
+    }).done((result)=>{
+      console.log("Updated");
+    });
+});
+
 
 
 
