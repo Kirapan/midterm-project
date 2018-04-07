@@ -68,7 +68,6 @@ $("#addOption").on('click', function () {
 $("#newPoll").on('submit', (event) => {
   event.preventDefault();
   option.push($(`#input${i}`).val());
-  // alert("working")
   let title = $("#pollTitle").val();
   let userEmail = $("#useremail").val();
 
@@ -83,7 +82,6 @@ $("#newPoll").on('submit', (event) => {
   } else {
     if (!useremail) {
       alert("Hey, We need your email!");
-
     }
     console.log(pollInfo)
     $.ajax({
@@ -92,9 +90,9 @@ $("#newPoll").on('submit', (event) => {
       data: pollInfo
     })
       .done((result) => {
-        console.log("POSTED!");
+        let id = result[0];
+        window.location.href = `/api/polls/votes/${id}`
       });
-    location.reload();
   }
 });
 

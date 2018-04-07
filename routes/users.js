@@ -52,14 +52,23 @@ module.exports = (knex) => {
   function saveOptions(id, arr) {
     return new Promise(function (resolve, reject) {
       if (!arr || !id) {
+        console.log(err.message);
         return reject(err);
       }
       else {
-        arr.forEach((option) => {
-          knex('options')
+        var quereey = arr.map((option) => {
+          console.log(option);
+          return knex('options')
             .insert({ poll_id: id, name: option })
         })
-        return resolve(arr);
+        console.log('querey',quereey);
+        Promise.all(quereey).then(data =>{
+          console.log("all");
+          return resolve();
+        })
+        .catch(err=>{
+          console.log(err.message)
+        })
       }
     });
   }
@@ -128,7 +137,6 @@ module.exports = (knex) => {
               promises.push(knex('options')
                 .insert({ poll_id: pollid, name: data.name }))
             }
-
             Promise.all(promises).then(function (results) {
               return resolve(results);
             }).catch(function (err) {
@@ -141,18 +149,6 @@ module.exports = (knex) => {
         });
     })
   }
-
-  function votesCaculator(votesArr) {
-    let votes =
-      votes.forEach(function (voteObj) {
-        let vote = [];
-        for (let key in voteObj) {
-          vote.push(voteObj[key]);
-        }
-
-      })
-  }
-
 
   function rankUp(votes) {
     return new Promise(function (resolve, regject) {
@@ -175,7 +171,7 @@ module.exports = (knex) => {
       }
     })
   }
-
+//works
   router.get("/all", (req, res) => {
     getPolls(req.params.id)
       .then((results) => {
@@ -199,7 +195,7 @@ module.exports = (knex) => {
         res.render("votes", templateVars);
       });
   });
-
+//works
   router.post("/votes/:id", (req, res) => {
     rankUp(req.body)
       .then(function (result) {
@@ -222,10 +218,9 @@ module.exports = (knex) => {
         res.status(400).send(err);
       })
   })
-
+//works
   router.post('/new', (req, res) => {
     let useremail = req.body.email
-    console.log(useremail);
     var data = {
       from: `Chill Poll <${useremail}>`,
       to: 'strangesm@gmail.com',
@@ -237,49 +232,24 @@ module.exports = (knex) => {
       if (error) {
         console.log(error)
       }
-      console.log(body);
     });
-
     let options = req.body;
     let optionArray = options.options;
-    console.log('ahaha', options)
-    console.log('why',optionArray);
     savePolls(options)
       .returning('id')
-      .then(function (id) {
-        console.log(id);
-        optionArray.forEach((option) => {
-          knex('options')
-            .insert({ poll_id: id, name: option })
-            .then(function () {})
-            .catch(function () {})
-        })
+      .then(function(id){
+        let pollID = id;
+        saveOptions(id[0], optionArray)
+          //.returning('*')
+          .then(function (){
+            res.send(pollID);
+          })
       })
       .catch(function (err) {
+        console.log(err)
         res.status(400).send(err);
       })
   })
-
-  // router.post('/new', (req, res) => {
-  //   let options = req.body;
-  //   let optionArray = options.options;
-  //   console.log("app",options);
-  //   savePolls(options)
-  //     .returning('id')
-  //     .then(function(id){
-  //       console.log("id",id);
-  //       saveOptions(id, optionArray)
-  //         .returning('*')
-  //         .then(function (result){
-  //           console.log(result);
-  //           res.redirect("/all");
-  //         })
-  //     })
-  //     .catch(function (err) {
-  //       console.log(err)
-  //       res.status(400).send(err);
-  //     })
-  // })
 
   router.delete('/delete/:id', (req, res) => {
     findAndDelete(req.params.id, req.params.email)
