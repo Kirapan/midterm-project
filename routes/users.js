@@ -171,9 +171,7 @@ module.exports = (knex) => {
         })
         .catch(err => {
           console.log(err.message)
-        })
-
-        
+        })   
       }
     })
   }
