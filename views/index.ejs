@@ -17,87 +17,67 @@
     <!-- Custom CSS -->
     <link href="../public/styles/heroic-features.css" type="text/css">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
     <!-- HERE IS THE OLD STUFF -->
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
     <link rel="stylesheet" href="/styles/nav.css" type="text/css" />
     <link rel="stylesheet" href="/styles/section.css" type="text/css" />
-    <link rel="stylesheet" href="../public/styles/bootstrap.css" type="text/css">
-    <!--  <script type="text/javascript" src="/scripts/app.js"></script> -->
+    <link rel="stylesheet" href="../public/styles/bootstrap.min.css" type="text/html">
+  <!--  <script type="text/javascript" src="/scripts/app.js"></script> -->
     <link rel="stylesheet" href="/vendor/jquery-ui.min.css">
 </head>
 
 <body>
-
-    <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Chill Polls</a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a id="#NewPoll" href="#createPoll">New Poll</a>
-                    </li>
-                    <li>
-                        <a id="#seeResult" href="#realResults">Results</a>
-                    </li>
-                    <li>
-                        <a href="#">About</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
+ <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">Toronto</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          Menu
+          <i class="fa fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#download">Download</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
+            </li>
+          </ul>
         </div>
-        <!-- /.container -->
+      </div>
     </nav>
 
-    <!-- Page Content -->
-    <div class="container">
-
-        <!-- Jumbotron Header -->
-        <header class="jumbotron hero-spacer">
-            <h1>Hey, What's up?!</h1>
-            <p>Wondering what to do on this monday night ? Ask your friends! Lorem ipsum dolor sit amet, consectetur adipisicing
-                elit. Ipsa, ipsam, eligendi, in quo sunt possimus non incidunt odit vero aliquid similique quaerat nam nobis
-                illo aspernatur vitae fugiat numquam repellat.</p>
-            <p>
-                <a class="btn btn-primary btn-large">I want to ask them!</a>
-            </p>
-
-            <p id="testdrag" option="1">drag</p>
-            <p id="testdrop" location="1">drop</p>
-        </header>
-
-        <hr>
-
-        <!-- Title -->
-        <div class="row" id="realResults">
-            <div class="col-lg-12">
-                <h3 id="ss">Latest Polls</h3>
+    <!-- Intro Header -->
+    <header class="masthead">
+      <div class="intro-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8 mx-auto">
+              <h1 class="brand-heading">Chill Poll</h1>
+              <p class="intro-text">A free, funny and amazing way to know what your firends think you should do for a friday night!
+                <br>-</p>
+              <a href="#about" class="btn btn-circle js-scroll-trigger">
+                <i class="fa fa-angle-double-down animated"></i>
+              </a>
             </div>
+          </div>
         </div>
-        <!-- /.row -->
+      </div>
+    </header>
 
-        <!-- Page Features -->
-        <div class="features row text-center">
+    <!-- About Section -->
+    <section id="about" class="content-section text-center">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto" class="options">
+            <h2>results</h2>
+            <div class="features row text-center">
 
             <div class="col-md-3 col-sm-6 hero-feature">
                 <div class="thumbnail" name="/Features">
@@ -106,30 +86,64 @@
                         <h3>Feature Label</h3>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                         <p>
-                            <a href="#" class="btn btn-primary">Buy Now!</a>
-                            <a href="#" class="btn btn-default">More Info</a>
+                            <a href="#" class="btn btn-primary">Results</a> <a href="#" class="btn btn-default">Vote</a>
                         </p>
                     </div>
                 </div>
             </div>
 
-
         </div>
-        <!-- /.row -->
+          </div>
+        </div>
+      </div>
+    </section>
 
-        <hr>
+    <!-- Download Section -->
+    <section id="download" class="download-section content-section text-center">
+      <div class="container">
+        <div class="col-lg-8 mx-auto">
+          <h2>Download Grayscale</h2>
+          <p>You can download Grayscale for free on the preview page at Start Bootstrap.</p>
+          <a href="http://startbootstrap.com/template-overviews/grayscale/" class="btn btn-default btn-lg">Visit Download Page</a>
+        </div>
+      </div>
+    </section>
 
-        <!-- Footer -->
-        <footer>
-            <div class="row">
-                <div class="col-lg-12">
-                    <p>Copyright &copy; Your Website 2014</p>
-                </div>
-            </div>
-        </footer>
+    <!-- Contact Section -->
+    <section id="contact" class="content-section text-center">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h2>Contact Start Bootstrap</h2>
+            <p>Feel free to leave us a comment on the
+              <a href="http://startbootstrap.com/template-overviews/grayscale/">Grayscale template overview page</a>
+              on Start Bootstrap to give some feedback about this theme!</p>
+            <ul class="list-inline banner-social-buttons">
+              <li class="list-inline-item">
+                <a href="https://twitter.com/SBootstrap" class="btn btn-default btn-lg">
+                  <i class="fa fa-twitter fa-fw"></i>
+                  <span class="network-name">Twitter</span>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a href="https://github.com/BlackrockDigital/startbootstrap" class="btn btn-default btn-lg">
+                  <i class="fa fa-github fa-fw"></i>
+                  <span class="network-name">Github</span>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a href="https://plus.google.com/+Startbootstrap/posts" class="btn btn-default btn-lg">
+                  <i class="fa fa-google-plus fa-fw"></i>
+                  <span class="network-name">Google+</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    </div>
-
+   
     <div class="container 2" id="createPoll">
 
         <!-- Jumbotron Header -->
@@ -200,13 +214,10 @@
 
     <!-- Bootstrap Core JavaScript -->
 
-    <script type="text/javascript" src="../public/scripts/bootstrap.js"></script>
+    <script type="text/html" src="../public/scripts/bootstrap.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
     <script type="text/javascript" src="/scripts/votes.js"></script>
     <!-- // <script type="text/javascript" src="../public/mailing.js"></script> -->
-
-
-
 
 </body>
 

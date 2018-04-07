@@ -293,12 +293,12 @@ module.exports = (knex) => {
   //works
   router.get('/edit/:id', (req, res) => {
     getPolls(req.params.id)
-      .then(function (result) {
-        res.send(result).render('edit');
-      })
-      .catch(function (err) {
-        res.status(400).send(err);
-      })
+    .then(function (result) {
+      res.render('edit'); // Rendering the edit page
+    })
+    .catch(function (err){
+      res.status(400).send(err);
+    })
   })
 
   router.put('/edit/:id', (req, res) => {
@@ -323,6 +323,9 @@ module.exports = (knex) => {
       })
   })
 
+  router.get("/results/:id", (req, res)=>{
+    res.render("results")
+  })
 
   return router;
 };
