@@ -18,7 +18,7 @@ $(() => {
             value: pointnumber
           };
           pointsArray.push(pointsObj);
-        })
+        });
       }
     }
   })

@@ -58,6 +58,8 @@ $(document).ready(() => {
 
 
 
+var option = [];
+
   $("#deleteButton").on('click', (event) => {
     event.preventDefault();
     let urlID = $("#pollTitle").attr('poll_id');
@@ -74,24 +76,67 @@ $(document).ready(() => {
 
   });
 
-  //NOT WORKING YET
-  $(".askButton").on('click', (event) => {
-    let pollInfo = {
-      name: title,
-      options: option
-    };
-    var option = [];
-    let i = 1;
-    let title = $("#pollTitle").val();
-    console.log('title', title);
-    event.preventDefault();
-    console.log(pollInfo);
+// let title = $("input#pollTitle").val();
+ let pollInfo = {
+          name: $("input#pollTitle").val(), 
+          options: option
+                 };
+//Adding Options in case the user want - NOT WORKING YET
+let i = 1;
+$("#addOption").on('click', function(){
+  function input(number) {
+    return `input${number}`;
+  }
+  // alert("working");
+
+  let checkinField = $(`#${input(i)}`).val();
+  // checkinField.length > 0 && option.push(checkinField);
+  if(!checkinField) {
+    alert("Cmon man, that one is empty!! why do you need more ?...");
+  } else {
+    $(".askButton").before(`<br/><label for="inputOption">Option ${1+i}</label>
+       <input type="option" 
+      id="${input(++i)}" class="form-control" 
+      placeholder="What are your options ?">`);
+  }
+});
+
+//NOT WORKING YET
+$("#editPoll").on('submit', (event)=>{
+  console.log(pollInfo);
+  event.preventDefault();
+    // alert("working");
     $.ajax({
       method: "PUT",
       url: `/api/polls/edit/${pollId}`,
       data: pollInfo,
-    }).done((result) => {
+    }).done((result)=>{
       console.log("Updated");
     });
-  });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 });

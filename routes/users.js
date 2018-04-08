@@ -92,10 +92,12 @@ module.exports = (knex) => {
   function findAndDelete(id, email) {
     return new Promise(function (resolve, reject) {
       knex
-        .select('email')
+        .select('id')
         .from('polls')
         .where('id', "=", id)
         .then(function (result) {
+          console.log("Getting here => findAndDelete Func")
+          console.log(result)
           let promises = [];
           if (result[0].email === email) {
             promises.push(deletePolls(id));
