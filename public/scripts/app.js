@@ -1,3 +1,4 @@
+
 $(document).ready(() => {
 
   //voting page
@@ -10,29 +11,29 @@ $(document).ready(() => {
 
   const getPollinfor = (poll) => {
     $("div.options").append(`
-  <label for="exampleInputEmail1"> Your title is</label>
-    <input type="text" class="form-control" id="pollTitle"
-      aria-describedby="emailHelp" placeholder="Enter the Title"
-    value="${pollid.name}"><label for="exampleInputEmail1">
-    Your Email address</label><input type="email" class="form-control"
-  id="useremail" aria-describedby="emailHelp" value="${pollid.email}">
-  <br/><label for="inputOption">Option ${pollid.optionid}</label>
-<input type="option" id="input${pollid.optionid}" class="form-control" 
-  placeholder="What are your options ?"></div></div></div>`)
+<label for="exampleInputEmail1"> Your title is</label>
+<input type="text" class="form-control" id="pollTitle"
+aria-describedby="emailHelp" placeholder="Enter the Title"
+value="${pollid.name}"><label for="exampleInputEmail1">
+Your Email address</label><input type="email" class="form-control"
+id="useremail" aria-describedby="emailHelp" value="${pollid.email}">
+<br/><label for="inputOption">Option ${pollid.optionid}</label>
+<input type="option" id="input${pollid.optionid}" class="form-control"
+placeholder="What are your options ?"></div></div></div>`)
   }
 
-  //Deleting a poll 
+  //Deleting a poll
   // ...
   //Creating all the polls and sending to the index.ejs
   const generateDiv = (poll) => {
     $("div.features").append(`<div class="col-md-3 col-sm-6 hero-feature">
-                <div class="thumbnail">
-                    <img src="http://placehold.it/800x500" alt="">
-                    <div class="caption">
+<div class="thumbnail">
+<img src="http://placehold.it/800x500" alt="">
+<div class="caption">
 <a href="/api/polls/results/${poll.poll_id}" pollid="${poll.poll_id}" optionid="${poll.id}" rank="${poll.options[0].rank}"><h3>${poll.pollname}</h3></a>
-                    </div>
-                </div>
-            </div>`);
+</div>
+</div>
+</div>`);
   }
   //Rendering the Polls on the index.ejs
   $(() => {
@@ -61,9 +62,9 @@ $(document).ready(() => {
       alert("Cmon man, that one is empty!! why do you need more ?...");
     } else {
       $(".askButton").before(`<br/><label for="inputOption" class="alsotoDelete">Option ${1 + i}</label>
-       <input type="option" 
-      id="${input(++i)}" class="form-control toDelete" 
-      placeholder="What are your options ?">`);
+<input type="option"
+id="${input(++i)}" class="form-control toDelete"
+placeholder="What are your options ?">`);
     }
   });
 

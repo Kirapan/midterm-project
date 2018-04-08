@@ -1,14 +1,15 @@
+
 $(document).ready(() => {
   const pollId = window.location.href.slice(37); // Getting the id
   //Creating the Form with all the informations by id
   const generateDiv = (poll) => {
     $(".askButton").before(`<label for="exampleInputEmail1">Your title was:</label>
-  <input type="text" class="form-control" id="pollTitle" poll_id=${poll.poll_id} value="${poll.pollname}"
-   aria-describedby="emailHelp" placeholder="Enter the Title" value="OKAY"/>
-  <label id="emailaddress" data-email="${poll.email}" for="exampleInputEmail1">Your Email address</label>
-  <input type="email" class="form-control" id="useremail" aria-describedby="emailHelp" 
-  placeholder="Please Enter Email!">
-  <br/>`);
+<input type="text" class="form-control" id="pollTitle" poll_id=${poll.poll_id} value="${poll.pollname}"
+aria-describedby="emailHelp" placeholder="Enter the Title" value="OKAY"/>
+<label id="emailaddress" data-email="${poll.email}" for="exampleInputEmail1">Your Email address</label>
+<input type="email" class="form-control" id="useremail" aria-describedby="emailHelp"
+placeholder="Please Enter Email!">
+<br/>`);
     addOption(poll); //looping through the options array and rendering options
   };
   //Checking which option should be render
@@ -24,9 +25,9 @@ $(document).ready(() => {
   const addOption = (poll) => {
     poll.options.forEach(option => {
       $("#useremail").after(`
-      <label for="inputOption" class="alsotoDelete">Option</label>
-      <input type="option" data-optionid="${option.optionid}" class="form-control input1"
-      value="${option.name}"><br/>`);
+<label for="inputOption" class="alsotoDelete">Option</label>
+<input type="option" data-optionid="${option.optionid}" class="form-control input1"
+value="${option.name}"><br/>`);
       return;
     });
   };
@@ -37,7 +38,7 @@ $(document).ready(() => {
   }).done((polls) => {
     pickThePoll(polls);
   });
-  //when the form is submited 
+  //when the form is submited
   let i = 1;
   function input(number) {
     return `input${number}`;
@@ -48,10 +49,10 @@ $(document).ready(() => {
       alert("Please fill in the empty option first!");
     } else {
       $(".askButton").before(`<br/><label for="inputOption" class="alsotoDelete">Option</label>
-      <input type="option" 
-      class="form-control input1"
-      data-optionid="dummy"
-      placeholder="What are your options ?">`);
+<input type="option"
+class="form-control input1"
+data-optionid="dummy"
+placeholder="What are your options ?">`);
     }
   });
 
