@@ -38,7 +38,7 @@ $(document).ready(() => {
     pickThePoll(polls);
   });
   //when the form is submited 
-  
+
   $("#addOption").on('click', function () {
     function input(number) {
       return `input${number}`;
@@ -55,31 +55,24 @@ $(document).ready(() => {
       placeholder="What are your options ?">`);
     }
   });
-  
-  
-  // window.onload = function() {
-    $("#deleteButton").on('click', (event) => {
-      event.preventDefault();
-      let urlID = $("#pollTitle").attr('poll_id');
-      let useremail = $("#useremail").val();
-        $.ajax({
-          method: "DELETE",
-          url: `/api/polls/delete/${urlID}`,
-          data:{
-            id: urlID,
-            email:useremail
-          }
-        })
-        window.location.href = '/';
-      
-     });
-  // };
 
 
 
+  $("#deleteButton").on('click', (event) => {
+    event.preventDefault();
+    let urlID = $("#pollTitle").attr('poll_id');
+    let useremail = $("#useremail").val();
+    $.ajax({
+      method: "DELETE",
+      url: `/api/polls/delete/${urlID}`,
+      data: {
+        id: urlID,
+        email: useremail
+      }
+    })
+    window.location.href = '/';
 
-
-
+  });
 
   //NOT WORKING YET
   $(".askButton").on('click', (event) => {
@@ -90,7 +83,7 @@ $(document).ready(() => {
     var option = [];
     let i = 1;
     let title = $("#pollTitle").val();
-    console.log('title',title);
+    console.log('title', title);
     event.preventDefault();
     console.log(pollInfo);
     $.ajax({

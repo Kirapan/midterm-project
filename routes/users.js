@@ -61,14 +61,14 @@ module.exports = (knex) => {
           return knex('options')
             .insert({ poll_id: id, name: option })
         })
-        console.log('querey',quereey);
-        Promise.all(quereey).then(data =>{
+        console.log('querey', quereey);
+        Promise.all(quereey).then(data => {
           console.log("all");
           return resolve();
         })
-        .catch(err=>{
-          console.log(err.message)
-        })
+          .catch(err => {
+            console.log(err.message)
+          })
       }
     });
   }
@@ -77,7 +77,7 @@ module.exports = (knex) => {
     return knex
       .select()
       .from('polls')
-      .where('id',"=", id)
+      .where('id', "=", id)
       .delete()
   }
 
@@ -85,16 +85,16 @@ module.exports = (knex) => {
     return knex
       .select()
       .from('options')
-      .where('poll_id',"=", id)
+      .where('poll_id', "=", id)
       .delete()
   }
-//working
+  //working
   function findAndDelete(id, email) {
     return new Promise(function (resolve, reject) {
       knex
         .select('email')
         .from('polls')
-        .where('id',"=",id)
+        .where('id', "=", id)
         .then(function (result) {
           let promises = [];
           if (result[0].email === email) {
@@ -104,14 +104,14 @@ module.exports = (knex) => {
             console.log('Permission denied. Only creator has the permission to delete this poll. ')
           }
           Promise.all(promises)
-          .then(function () {
-            console.log('okkkkkk');
-            return resolve();
-          })
-          .catch(function (err) {
-            console.log(err.message); 
-            return reject(err);
-          })
+            .then(function () {
+              console.log('okkkkkk');
+              return resolve();
+            })
+            .catch(function (err) {
+              console.log(err.message);
+              return reject(err);
+            })
         })
         .catch(function (err) {
         })
@@ -119,15 +119,15 @@ module.exports = (knex) => {
   }
 
   function findAndUpdateOptions(pollid, data) {
-    console.log("pollid",pollid);
-    console.log("data",data);
+    console.log("pollid", pollid);
+    console.log("data", data);
     return new Promise(function (resolve, reject) {
       knex
         .select()
         .from('options')
         .where('poll_id', pollid)
         .then(function (result) {
-          console.log("result",result);
+          console.log("result", result);
           let promises = [];
           result.forEach(function (option) {
             if (option.id === data.optionid) {
@@ -155,26 +155,26 @@ module.exports = (knex) => {
 
   function rankUp(votes) {
     return new Promise(function (resolve, regject) {
-      console.log("before",votes);
+      console.log("before", votes);
       if (!votes) {
         return reject(err);
       }
       else {
-        var queries = Object.keys(votes).map(function(itemId) {
-            return knex('options')
-              .where('id',"=", itemId)
-              .increment('rank', Number(votes[itemId]))
+        var queries = Object.keys(votes).map(function (itemId) {
+          return knex('options')
+            .where('id', "=", itemId)
+            .increment('rank', Number(votes[itemId]))
         })
         Promise.all(queries).then(data => {
           return resolve();
         })
-        .catch(err => {
-          console.log(err.message)
-        })   
+          .catch(err => {
+            console.log(err.message)
+          })
       }
     })
   }
-//works
+  //works
   router.get("/all", (req, res) => {
     getPolls(req.params.id)
       .then((results) => {
@@ -185,24 +185,24 @@ module.exports = (knex) => {
       })
   });
 
-//works
+  //works
   router.get("/votes/:id", (req, res) => {
     knex
-      .select('polls.name as pollsname','polls.id as pollid', 'options.name as optionsname','options.id as optionid')
+      .select('polls.name as pollsname', 'polls.id as pollid', 'options.name as optionsname', 'options.id as optionid')
       .from("polls")
       .rightOuterJoin('options', 'polls.id', '=', 'options.poll_id')
       .where('polls.id', req.params.id)
       .then((results) => {
         console.log(results);
-        let templateVars = {results: results};
+        let templateVars = { results: results };
         res.render("votes", templateVars);
       });
   });
-//works
+  //works
   router.post("/votes/:id", (req, res) => {
     rankUp(req.body)
       .then(function (result) {
-        console.log("resutl",result);
+        console.log("resutl", result);
         res.redirect(`/api/polls/result/${req.params.id}`);
       })
       .catch(function (err) {
@@ -221,7 +221,7 @@ module.exports = (knex) => {
         res.status(400).send(err);
       })
   })
-//works
+  //works
   router.post('/new', (req, res) => {
     let useremail = req.body.email
     var data = {
@@ -240,11 +240,11 @@ module.exports = (knex) => {
     let optionArray = options.options;
     savePolls(options)
       .returning('id')
-      .then(function(id){
+      .then(function (id) {
         let pollID = id;
         saveOptions(id[0], optionArray)
           //.returning('*')
-          .then(function (){
+          .then(function () {
             res.send(pollID);
           })
       })
@@ -266,17 +266,17 @@ module.exports = (knex) => {
   //works
   router.get('/edit/:id', (req, res) => {
     getPolls(req.params.id)
-    .then(function (result) {
-      res.render('edit'); // Rendering the edit page
-    })
-    .catch(function (err){
-      res.status(400).send(err);
-    })
+      .then(function (result) {
+        res.render('edit'); // Rendering the edit page
+      })
+      .catch(function (err) {
+        res.status(400).send(err);
+      })
   })
 
   router.put('/edit/:id', (req, res) => {
     let data = req.body;
-    console.log("data",req.body);
+    console.log("data", req.body);
     knex('polls')
       .where('id', req.params.id)
       .update({
@@ -297,7 +297,7 @@ module.exports = (knex) => {
       })
   })
 
-  router.get("/results/:id", (req, res)=>{
+  router.get("/results/:id", (req, res) => {
     res.render("results")
   })
 
