@@ -1,5 +1,5 @@
 $(document).ready(() => {
-  let i = 1;
+
   //voting page
   function createVote(id, content) {
     return `<div class="drag" option_id="${id}">${content}</div>`
@@ -47,24 +47,37 @@ $(document).ready(() => {
   });
 
   //Creating a new poll
+  let i = 1;
   var option = [];
   //Adding options to the poll
+  function input(number) {
+    return `input${number}`;
+  }
   $("#addOption").on('click', function () {
-    function input(number) {
-      return `input${number}`;
-    }
     let checkinField = $(`#${input(i)}`).val();
     // option.push(checkinField);
     checkinField.length > 0 && option.push(checkinField);
     if (!checkinField) {
       alert("Cmon man, that one is empty!! why do you need more ?...");
     } else {
-      $(".askButton").before(`<br/><label for="inputOption">Option ${1 + i}</label>
+      $(".askButton").before(`<br/><label for="inputOption" class="alsotoDelete">Option ${1 + i}</label>
        <input type="option" 
-      id="${input(++i)}" class="form-control" 
+      id="${input(++i)}" class="form-control toDelete" 
       placeholder="What are your options ?">`);
     }
   });
+
+  $("#removeOption").on('click', function () {
+    if (!$('.toDelete:last').length) {
+      alert("Nothing to delete!");
+    } else {
+      $('.toDelete:last').remove();
+      $('.alsotoDelete:last').remove();
+      checkinField = $(`#${input(--i)}`).val();
+      option.pop();
+    }
+  });
+
   $("#newPoll").on('submit', (event) => {
     event.preventDefault();
     option.push($(`#input${i}`).val());
@@ -78,7 +91,7 @@ $(document).ready(() => {
     };
 
     if (!pollInfo.name || !pollInfo.email || !pollInfo.options) {
-      alert("working!")
+      alert("Your information is incomplete!")
     } else {
       if (!useremail) {
         alert("Hey, We need your email!");
@@ -94,13 +107,6 @@ $(document).ready(() => {
           window.location.href = `/api/polls/votes/${id}`
         });
     }
-  });
-
-
-  $("#removeOption").on('click', function () {
-    // alert("working");
-    $(`#input${i}`).empty();
-    i--;
   });
 
   $("#createPoll").on('submit', (event) => {

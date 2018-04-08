@@ -5,9 +5,9 @@ $(document).ready(() => {
     $(".askButton").before(`<label for="exampleInputEmail1">Your title was:</label>
   <input type="text" class="form-control" id="pollTitle" poll_id=${poll.poll_id} value="${poll.pollname}"
    aria-describedby="emailHelp" placeholder="Enter the Title" value="OKAY"/>
-  <label id="emailaddress" for="exampleInputEmail1">Your Email address</label>
+  <label id="emailaddress" data-email="${poll.email}" for="exampleInputEmail1">Your Email address</label>
   <input type="email" class="form-control" id="useremail" aria-describedby="emailHelp" 
-  value="${poll.email}">
+  placeholder="Please Enter Email!">
   <br/>`);
     addOption(poll); //looping through the options array and rendering options
   };
@@ -24,8 +24,8 @@ $(document).ready(() => {
   const addOption = (poll) => {
     poll.options.forEach(option => {
       $("#useremail").after(`
-      <label for="inputOption">Options</label>
-      <input type="option" data-optionid="${option.optionid}" class="form-control"
+      <label for="inputOption" class="alsotoDelete">Option</label>
+      <input type="option" data-optionid="${option.optionid}" class="form-control input1"
       value="${option.name}"><br/>`);
       return;
     });
@@ -38,105 +38,77 @@ $(document).ready(() => {
     pickThePoll(polls);
   });
   //when the form is submited 
-
+  let i = 1;
+  function input(number) {
+    return `input${number}`;
+  }
   $("#addOption").on('click', function () {
-    function input(number) {
-      return `input${number}`;
-    }
-    let checkinField = $(`#${input(i)}`).val();
-    // option.push(checkinField);
-    checkinField.length > 0 && option.push(checkinField);
+    let checkinField = $(`.${input(i)}`).val();
     if (!checkinField) {
-      alert("Cmon man, that one is empty!! why do you need more ?...");
+      alert("Please fill in the empty option first!");
     } else {
-      $(".askButton").before(`<br/><label for="inputOption">Option ${1 + i}</label>
+      $(".askButton").before(`<br/><label for="inputOption" class="alsotoDelete">Option</label>
       <input type="option" 
-      id="${input(++i)}" class="form-control" 
+      class="form-control input1"
+      data-optionid="dummy"
       placeholder="What are your options ?">`);
     }
   });
 
-
-
-var option = [];
+  $("#removeOption").on('click', function () {
+    if ($('.input1').length <= 2) {
+      alert('A poll needs at least 2 options');
+    } else {
+      $('.input1:last').remove();
+      $('.alsotoDelete:last').remove();
+    }
+  });
 
   $("#deleteButton").on('click', (event) => {
     event.preventDefault();
     let urlID = $("#pollTitle").attr('poll_id');
     let useremail = $("#useremail").val();
-    $.ajax({
-      method: "DELETE",
-      url: `/api/polls/delete/${urlID}`,
-      data: {
-        id: urlID,
-        email: useremail
-      }
-    })
-    window.location.href = '/';
-
+    if (useremail === $('#emailaddress').attr('data-email')) {
+      $.ajax({
+        method: "DELETE",
+        url: `/api/polls/delete/${urlID}`,
+        data: {
+          id: urlID,
+          email: useremail
+        }
+      })
+      window.location.href = '/';
+    } else {
+      alert('Email is not found!')
+    }
   });
 
-// let title = $("input#pollTitle").val();
- let pollInfo = {
-          name: $("input#pollTitle").val(), 
-          options: option
-                 };
-//Adding Options in case the user want - NOT WORKING YET
-let i = 1;
-$("#addOption").on('click', function(){
-  function input(number) {
-    return `input${number}`;
-  }
-  // alert("working");
-
-  let checkinField = $(`#${input(i)}`).val();
-  // checkinField.length > 0 && option.push(checkinField);
-  if(!checkinField) {
-    alert("Cmon man, that one is empty!! why do you need more ?...");
-  } else {
-    $(".askButton").before(`<br/><label for="inputOption">Option ${1+i}</label>
-       <input type="option" 
-      id="${input(++i)}" class="form-control" 
-      placeholder="What are your options ?">`);
-  }
-});
-
-//NOT WORKING YET
-$("#editPoll").on('submit', (event)=>{
-  console.log(pollInfo);
-  event.preventDefault();
-    // alert("working");
-    $.ajax({
-      method: "PUT",
-      url: `/api/polls/edit/${pollId}`,
-      data: pollInfo,
-    }).done((result)=>{
-      console.log("Updated");
-    });
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  //working
+  $("#editPoll").on('submit', (event) => {
+    event.preventDefault();
+    if ($("#useremail").val() === $('#emailaddress').attr('data-email')) {
+      let polldata = {};
+      let optionHolder = {};
+      let optionArray = [];
+      $('.input1').each(function (input) {
+        let optionid = $(this).attr('data-optionid')
+        let optionname = $(this).val();
+        optionHolder = { optionid, optionname }
+        optionArray.push(optionHolder);
+      })
+      let pollInfo = {
+        title: $("input#pollTitle").val(),
+        options: optionArray
+      }
+      $.ajax({
+        method: "PUT",
+        url: `/api/polls/edit/${pollId}`,
+        data: pollInfo,
+      }).done((result) => {
+        window.location.href = `/api/polls/results/${pollId}`;
+      });
+    } else {
+      alert('Email not found!');
+    }
+  })
 });
