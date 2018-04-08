@@ -5,7 +5,7 @@ $(document).ready(()=> {
 const generateDiv = (poll) =>{
   $(".askButton").before(`<label for="exampleInputEmail1">Your title was:</label>
   <input type="text" class="form-control" id="pollTitle" value="${poll.pollname}"
-   aria-describedby="emailHelp" placeholder="Enter the Title" value="OKAY"/>
+   aria-describedby="emailHelp" placeholder="Enter the Title"/>
   <label for="exampleInputEmail1">Your Email address</label>
   <input type="email" class="form-control" id="useremail" aria-describedby="emailHelp" 
   value="${poll.email}">
@@ -15,7 +15,7 @@ const generateDiv = (poll) =>{
 //Checking which option should be render
 const pickThePoll = (polls) =>{
   polls.forEach(poll => {
-    console.log(poll.poll_id == pollId)
+    // console.log(poll.poll_id == pollId)
     if(poll.poll_id == pollId){
       generateDiv(poll);
     }
@@ -72,6 +72,35 @@ $("#addOption").on('click', function(){
       placeholder="What are your options ?">`);
   }
 });
+
+
+window.onload = function() {
+  let useremail = $("#useremail").val();
+
+
+
+$("#deleteButton").on('click', (event)=>{
+  event.preventDefault();
+  $.ajax({
+    method: "DELETE",
+    url: `/api/polls/delete/${pollId}`,
+    data:{
+      id: pollId,
+      email: useremail
+    },
+    success: function(data){
+      console.log(data);
+    }
+  }).done((result)=>{
+  console.log("Checking", result);
+
+    window.location.href = "/";
+  });
+
+
+});
+
+};
 //NOT WORKING YET
 $("#editPoll").on('submit', (event)=>{
   console.log(pollInfo);

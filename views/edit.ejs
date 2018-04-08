@@ -36,7 +36,7 @@
 </head>
 
 <body>
- <div class="container 3" id="editPoll">
+ <div class="container 3">
 
         <!-- Jumbotron Header -->
         <!-- <header class="jumbotron hero-spacer">
@@ -59,7 +59,7 @@
         <!-- Page Features -->
 
         <div class="row text-center">
-         <form method="POST" id="editPoll">
+         <form method="PUT" id="editPoll">
             <div class="form-group options">
          <!-- 
          <label for="exampleInputEmail1">Your title is</label>
@@ -70,11 +70,11 @@
              <br/><label for="inputOption">Option 1</label>
             <input type="option" id="input1" class="form-control" placeholder="What are your options ?"> -->
             <input type="submit" class="form-control askButton" value="Ask them!">
-
+            <button class="form-control btn btn-danger" id="deleteButton">Delete</button>
 
         </div>
         </form>
-         <button id="addOption" class="btn btn-primary btn-large">+</button><button id="removeOption" class="btn btn-danger btn-large">-</button>
+         <button id="addOption" class="form-contro btn btn-primary btn-small">+</button><button id="removeOption" class=" form-contro btn btn-danger btn-small">-</button>
             
         </div>
         <!-- /.row -->

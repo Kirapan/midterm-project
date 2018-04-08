@@ -92,10 +92,12 @@ module.exports = (knex) => {
   function findAndDelete(id, email) {
     return new Promise(function (resolve, reject) {
       knex
-        .select('email')
+        .select('id')
         .from('polls')
-        .where('email', id)
+        .where('id', id)
         .then(function (result) {
+          console.log("Getting here => findAndDelete Func")
+          console.log(result)
           let promises = [];
           if (result.email === email) {
             promises.push(deletePolls(id))
@@ -113,7 +115,7 @@ module.exports = (knex) => {
           })
         })
         .catch(function (err) {
-          res.status(400).send(err);
+          // res.status(400).send(err);
         })
     })
   }
@@ -252,9 +254,11 @@ module.exports = (knex) => {
   })
 
   router.delete('/delete/:id', (req, res) => {
-    findAndDelete(req.params.id, req.params.email)
+    console.log("Getting here => deleteRoute")
+    console.log(req.params.id, "===> ", req.params.email)
+    findAndDelete(req.params.id, email)
       .then(function () {
-        res.redirect("/all");
+        res.send();
       })
       .catch(function (err) {
         res.status(400).send(err);
