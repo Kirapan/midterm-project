@@ -77,7 +77,7 @@ module.exports = (knex) => {
     return knex
       .select()
       .from('polls')
-      .where('id', id)
+      .where('id',"=", id)
       .delete()
   }
 
@@ -85,46 +85,49 @@ module.exports = (knex) => {
     return knex
       .select()
       .from('options')
-      .where('poll_id', id)
+      .where('poll_id',"=", id)
       .delete()
   }
-
+//working
   function findAndDelete(id, email) {
     return new Promise(function (resolve, reject) {
       knex
         .select('email')
         .from('polls')
-        .where('email', id)
+        .where('id',"=",id)
         .then(function (result) {
           let promises = [];
-          if (result.email === email) {
-            promises.push(deletePolls(id))
-              .then(function () {
-                promises.push(deleteOptions(id))
-              })
+          if (result[0].email === email) {
+            promises.push(deletePolls(id));
+            promises.push(deleteOptions(id));
           } else {
             console.log('Permission denied. Only creator has the permission to delete this poll. ')
           }
-
-          Promise.all(promises).then(function () {
+          Promise.all(promises)
+          .then(function () {
+            console.log('okkkkkk');
             return resolve();
-          }).catch(function (err) {
+          })
+          .catch(function (err) {
+            console.log(err.message); 
             return reject(err);
           })
         })
         .catch(function (err) {
-          res.status(400).send(err);
         })
     })
   }
 
   function findAndUpdateOptions(pollid, data) {
+    console.log("pollid",pollid);
+    console.log("data",data);
     return new Promise(function (resolve, reject) {
       knex
         .select()
         .from('options')
         .where('poll_id', pollid)
         .then(function (result) {
+          console.log("result",result);
           let promises = [];
           result.forEach(function (option) {
             if (option.id === data.optionid) {
@@ -182,7 +185,7 @@ module.exports = (knex) => {
       })
   });
 
-  //works
+//works
   router.get("/votes/:id", (req, res) => {
     knex
       .select('polls.name as pollsname','polls.id as pollid', 'options.name as optionsname','options.id as optionid')
@@ -252,9 +255,9 @@ module.exports = (knex) => {
   })
 
   router.delete('/delete/:id', (req, res) => {
-    findAndDelete(req.params.id, req.params.email)
+    findAndDelete(req.params.id, req.body.email)
       .then(function () {
-        res.redirect("/all");
+        res.redirect("/");
       })
       .catch(function (err) {
         res.status(400).send(err);
@@ -273,6 +276,7 @@ module.exports = (knex) => {
 
   router.put('/edit/:id', (req, res) => {
     let data = req.body;
+    console.log("data",req.body);
     knex('polls')
       .where('id', req.params.id)
       .update({
@@ -282,7 +286,7 @@ module.exports = (knex) => {
       .then(function () {
         findAndUpdateOptions(req.params.id, data)
           .then(function (results) {
-            res.send(results).redirect("/all");
+            res.send(results);
           })
           .catch(function (err) {
             res.status(400).send(err);
