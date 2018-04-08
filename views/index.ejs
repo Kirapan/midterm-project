@@ -1,241 +1,224 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
 
-    <title>CHILL poll</title>
+<title>Heroic Features - Start Bootstrap Template</title>
 
-    <!-- Bootstrap Core CSS -->
-    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap Core CSS -->
+<link href="../public/styles/bootstrap.min.css" type="text/css">
 
-    <!-- Custom CSS -->
-    <link href="/styles/heroic-features.css" type="text/css">
-    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/html">
-    <!-- Custom fonts for this template -->
-    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <!-- Custom styles for this template -->
-    <link href="/styles/css/grayscale.min.css" rel="stylesheet">
-  <style type="text/css">
-     @media (min-width: 768px) {
-              .navbar-collapse {
-                width: auto;
-                border-top: 0;
-                -webkit-box-shadow: none;
-                box-shadow: none;
-              }
-              .navbar-collapse.collapse {
-                display: none !important;
-                height: auto !important;
-                padding-bottom: 0;
-                overflow: visible !important;
-              }
-            }
-  </style>
+<!-- Custom CSS -->
+<link href="../public/styles/heroic-features.css" type="text/css">
 
-    <!-- HERE IS THE OLD STUFF -->
-    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
-    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
-    <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
-    <link rel="stylesheet" href="/styles/nav.css" type="text/css" />
-    <link rel="stylesheet" href="/styles/section.css" type="text/css" />
-    <link rel="stylesheet" href="/styles/bootstrap.min.css" type="text/html">
-  <!--  <script type="text/javascript" src="/scripts/app.js"></script> -->
-    <link rel="stylesheet" href="/vendor/jquery-ui.min.css" type="text/css">
-    <link rel="stylesheet" href="/vendor/jquery-ui.min.js" type="text/javascript">
+<!-- HERE IS THE OLD STUFF -->
+<link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+<link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+<link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+<link rel="stylesheet" href="/styles/nav.css" type="text/css" />
+<link rel="stylesheet" href="/styles/section.css" type="text/css" />
+<link rel="stylesheet" href="../public/styles/bootstrap.min.css" type="text/html">
+<!-- <script type="text/javascript" src="/scripts/app.js"></script> -->
+<link rel="stylesheet" href="/vendor/jquery-ui.min.css">
 </head>
 
 <body>
- <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-      <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="#page-top">Toronto</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          Menu
-          <i class="collapse fa fa-bars"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive" style="
-          
-        ">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#about">Results</a>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand js-scroll-trigger" href="#page-top">Toronto</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="#about">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="#download">Download</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Intro Header -->
+<header class="masthead">
+  <div class="intro-body">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto">
+          <h1 class="brand-heading">Chill Poll</h1>
+          <p class="intro-text">A free, funny and amazing way to know what your firends think you should do for a friday night!
+            <br>-</p>
+            <a href="#about" class="btn btn-circle js-scroll-trigger">
+              <i class="fa fa-angle-double-down animated"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- About Section -->
+  <section id="about" class="content-section text-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto" class="options">
+          <h2>results</h2>
+          <div class="features row text-center">
+
+            <div class="col-md-3 col-sm-6 hero-feature">
+              <div class="thumbnail" name="/Features">
+                <img src="http://placehold.it/800x500" alt="">
+                <div class="caption">
+                  <h3>Feature Label</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                  <p>
+                    <a href="#" class="btn btn-primary">Results</a> <a href="#" class="btn btn-default">Vote</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Download Section -->
+  <section id="download" class="download-section content-section text-center">
+    <div class="container">
+      <div class="col-lg-8 mx-auto">
+        <h2>Download Grayscale</h2>
+        <p>You can download Grayscale for free on the preview page at Start Bootstrap.</p>
+        <a href="http://startbootstrap.com/template-overviews/grayscale/" class="btn btn-default btn-lg">Visit Download Page</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="content-section text-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto">
+          <h2>Contact Start Bootstrap</h2>
+          <p>Feel free to leave us a comment on the
+            <a href="http://startbootstrap.com/template-overviews/grayscale/">Grayscale template overview page</a>
+          on Start Bootstrap to give some feedback about this theme!</p>
+          <ul class="list-inline banner-social-buttons">
+            <li class="list-inline-item">
+              <a href="https://twitter.com/SBootstrap" class="btn btn-default btn-lg">
+                <i class="fa fa-twitter fa-fw"></i>
+                <span class="network-name">Twitter</span>
+              </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#download">New Poll</a>
+            <li class="list-inline-item">
+              <a href="https://github.com/BlackrockDigital/startbootstrap" class="btn btn-default btn-lg">
+                <i class="fa fa-github fa-fw"></i>
+                <span class="network-name">Github</span>
+              </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
+            <li class="list-inline-item">
+              <a href="https://plus.google.com/+Startbootstrap/posts" class="btn btn-default btn-lg">
+                <i class="fa fa-google-plus fa-fw"></i>
+                <span class="network-name">Google+</span>
+              </a>
             </li>
           </ul>
         </div>
       </div>
-    </nav>
+    </div>
+  </section>
 
-    <!-- Intro Header -->
-    <header class="masthead">
-      <div class="intro-body">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-8 mx-auto">
-              <h1 class="brand-heading">Chill Poll</h1>
-              <p class="intro-text">A free, funny and amazing way to know what your firends think you should do for a friday night!
-                <br></p>
-              <a href="#about" class="btn btn-circle js-scroll-trigger">
-                <i class="fa fa-angle-double-down animated"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
+  <div class="container 2" id="createPoll">
+
+    <!-- Jumbotron Header -->
+    <header class="jumbotron hero-spacer">
+      <h1>So, everything you need to do is:</h1>
+      <p>Wondering what to do on this monday night ? Ask your friends! Lorem ipsum dolor sit amet, consectetur adipisicing
+        elit. Ipsa, ipsam, eligendi, in quo sunt possimus non incidunt odit vero aliquid similique quaerat nam nobis
+      illo aspernatur vitae fugiat numquam repellat.</p>
+      <p>
+        <a class="btn btn-primary btn-large">I want to ask them!</a>
+      </p>
     </header>
 
-    <!-- About Section -->
-    <section id="about" class="content-section text-center">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-8 mx-auto" class="options">
-            <h2>results</h2>
-            <div class="features row text-center">
+    <hr>
 
-            <div class="col-md-3 col-sm-6 hero-feature">
-                <div class="thumbnail" name="/Features">
-                    <img src="http://placehold.it/800x500" alt="">
-                    <div class="caption">
-                        <h3>Feature Label</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                        <p>
-                            <a href="#" class="btn btn-primary">Results</a> <a href="#" class="btn btn-default">Vote</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-          </div>
-        </div>
+    <!-- Title -->
+    <div class="row">
+      <div class="col-lg-12">
+        <h3 id="realResults">New Poll</h3>
       </div>
-    </section>
+    </div>
+    <!-- /.row -->
 
-    <!-- Download Section -->
-    <section id="download" class="download-section content-section text-center">
-      <div class="container">
-        <div class="col-lg-8 mx-auto">
-          <h2>Download Grayscale</h2>
-           <div class="container 2" id="createPoll">
-
-        <!-- Jumbotron Header -->
-        <header>
-            <h1>So, everything you need to do is:</h1>
-            <p>Wondering what to do on this monday night ? Ask your friends!</p>
-            <p>
-                <!-- <a class="btn btn-primary btn-large">I want to ask them!</a> -->
-            </p>
-        </header>
-
-        <hr>
-
-        <!-- Title -->
-        <div class="row">
-            <div class="col-lg-12">
-                <!-- <h3 id="realResults">New Poll</h3> -->
-            </div>
+    <!-- Page Features -->
+    <div class="row text-center">
+      <form method="POST" id="newPoll">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Type your title</label>
+          <input type="text" class="form-control" id="pollTitle" aria-describedby="emailHelp" placeholder="Enter the Title">
+          <label for="exampleInputEmail1">Your Email address</label>
+          <input type="email" class="form-control" id="useremail" aria-describedby="emailHelp" placeholder="Enter email">
+          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+          <br/>
+          <label for="inputOption">Option 1</label>
+          <input type="option" id="input1" class="form-control" lastone="lastone" placeholder="What are your options ?">
+          <input type="submit" class="form-control askButton" value="Ask them!">
         </div>
-        <!-- /.row -->
-
-        <!-- Page Features -->
-      
-        </div>
-          <!-- <p>You can download Grayscale for free on the preview page at Start Bootstrap.</p>
-          <a href="http://startbootstrap.com/template-overviews/grayscale/" class="btn btn-default btn-lg">Visit Download Page</a> -->
-        </div>
-      </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="content-section text-center">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-8 mx-auto">
-            <h2>Contact Start Bootstrap</h2>
-            <p>Feel free to leave us a comment on the
-              <a href="http://startbootstrap.com/template-overviews/grayscale/">Grayscale template overview page</a>
-              on Start Bootstrap to give some feedback about this theme!</p>
-            <ul class="list-inline banner-social-buttons">
-              <li class="list-inline-item">
-                <a href="https://twitter.com/SBootstrap" class="btn btn-default btn-lg">
-                  <i class="fa fa-twitter fa-fw"></i>
-                  <span class="network-name">Twitter</span>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a href="https://github.com/BlackrockDigital/startbootstrap" class="btn btn-default btn-lg">
-                  <i class="fa fa-github fa-fw"></i>
-                  <span class="network-name">Github</span>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a href="https://plus.google.com/+Startbootstrap/posts" class="btn btn-default btn-lg">
-                  <i class="fa fa-google-plus fa-fw"></i>
-                  <span class="network-name">Google+</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-   
-    
-        <!-- /.row -->
-
-        <hr>
-
-        <!-- Footer -->
-        <footer>
-            <div class="row">
-                <div class="col-lg-12">
-                    <p>Copyright &copy; Your Website 2014</p>
-                </div>
-            </div>
-        </footer>
+      </form>
+      <button id="addOption" class="btn btn-primary btn-large">+</button>
+      <button id="removeOption" class="btn btn-danger btn-large">-</button>
 
     </div>
+    <!-- /.row -->
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+      <div class="row">
+        <div class="col-lg-12">
+          <p>Copyright &copy; Your Website 2014</p>
+        </div>
+      </div>
+    </footer>
+
+  </div>
 
 
-    </div>
+</div>
 
 
-    </div>
+</div>
 
 
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-    <!-- Bootstrap Core JavaScript -->
+<!-- Bootstrap Core JavaScript -->
 
-    <script type="text/html" src="/scripts/bootstrap.js"></script>
-    <script type="text/javascript" src="/scripts/app.js"></script>
-    <script type="text/javascript" src="/scripts/votes.js"></script>
-    <script type="text/javascript" src="/scripts/index.js"></script>
-  <!-- Bootstrap core JavaScript -->
-    <script src="/vendor/jquery/jquery.min.js"></script>
-    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- Plugin JavaScript -->
-    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for this template -->
-    <script src="/scripts/grayscale.min.js"></script>
-    <script type="text/javascript" src="/scripts/app.js"></script>
-
-    <!-- // <script type="text/javascript" src="../public/mailing.js"></script> -->
+<script type="text/html" src="../public/scripts/bootstrap.js"></script>
+<script type="text/javascript" src="/scripts/app.js"></script>
+<script type="text/javascript" src="/scripts/votes.js"></script>
+<!-- // <script type="text/javascript" src="../public/mailing.js"></script> -->
+>>>>>>> 48fa47f2b840536f8c7e702c500e50e72ea5f770
 
 </body>
 
