@@ -5,9 +5,9 @@ $(document).ready(() => {
   const generateDiv = (poll) => {
     $(".askButton").before(`<label for="exampleInputEmail1">Your title was:</label>
 <input type="text" class="form-control" id="pollTitle" poll_id=${poll.poll_id} value="${poll.pollname}"
-aria-describedby="emailHelp" placeholder="Enter the Title" value="OKAY"/>
+aria-describedby="emailHelp" placeholder="Enter the Title" style="font-size: 30px; height: 60px;"/>
 <label id="emailaddress" data-email="${poll.email}" for="exampleInputEmail1">Your Email address</label>
-<input type="email" class="form-control" id="useremail" aria-describedby="emailHelp"
+<input type="email" class="form-control" style="font-size: 30px; height: 60px;" id="useremail" aria-describedby="emailHelp"
 placeholder="Please Enter Email!">
 <br/>`);
     addOption(poll); //looping through the options array and rendering options
@@ -21,12 +21,13 @@ placeholder="Please Enter Email!">
       return;
     });
   };
+  // $(".askButton").attr("class", " btn btn")
   //Rendering all the options for each ID
   const addOption = (poll) => {
     poll.options.forEach(option => {
       $("#useremail").after(`
 <label for="inputOption" class="alsotoDelete">Option</label>
-<input type="option" data-optionid="${option.optionid}" class="form-control input1"
+<input style="font-size: 30px; height: 60px;" type="option" data-optionid="${option.optionid}" class="form-control input1"
 value="${option.name}"><br/>`);
       return;
     });
@@ -43,20 +44,22 @@ value="${option.name}"><br/>`);
   function input(number) {
     return `input${number}`;
   }
-  $("#addOption").on('click', function () {
-    let checkinField = $(`.${input(i)}`).val();
+  $("#addOption").on('click', function (event) {
+    event.preventDefault();
+    let checkinField = $('.input1:last').val();
     if (!checkinField) {
       alert("Please fill in the empty option first!");
     } else {
       $(".askButton").before(`<br/><label for="inputOption" class="alsotoDelete">Option</label>
 <input type="option"
-class="form-control input1"
+class="form-control input1" style="font-size: 30px; height: 60px;" 
 data-optionid="dummy"
 placeholder="What are your options ?">`);
     }
   });
 
-  $("#removeOption").on('click', function () {
+  $("#removeOption").on('click', function (event) {
+    event.preventDefault();
     if ($('.input1').length <= 2) {
       alert('A poll needs at least 2 options');
     } else {

@@ -7,7 +7,7 @@ $(() => {
   $('.drop').droppable({
     drop: function (event, ui) {
       // $(this).text('VOTED');
-      $(this).text('VOTED').attr("style","background-color: green;  height: 60px;");
+      $(this).text('VOTED').attr("style","background-color: #236172;  height: 80px; margin-bottom: 20px;");
       let points = $(this).attr('points');
       $(ui.draggable).attr('points', points);
       dropCounter--;
@@ -23,7 +23,7 @@ $(() => {
         });
       }
     }
-  })
+  });
   $("#pollsubmit").on('click', function () { 
     let result_id = $(".unique").attr('identifier');
       $.ajax({
