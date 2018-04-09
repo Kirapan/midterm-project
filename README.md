@@ -32,12 +32,12 @@ A web app called Chill Poll that helps groups of friends to vote on a preferred 
 - pg
 
 ## Screenshots
-!["Screenshot of landing page]()
-!["Screenshot of poll wall]()
-!["Screenshot of voting page]()
-!["Screenshot of results page]()
-!["Screenshot of new poll page]()
-!["Screenshot of contact us page]()
+!["Screenshot of landing page](https://github.com/bragamat/midterm-project/blob/master/public/Images/main_page.png)
+!["Screenshot of poll wall](https://github.com/bragamat/midterm-project/blob/master/public/Images/Poll_Wall.png)
+!["Screenshot of voting page](https://github.com/bragamat/midterm-project/blob/master/public/Images/Voting_page.png)
+!["Screenshot of results page](https://github.com/bragamat/midterm-project/blob/master/public/Images/Result_page.png)
+!["Screenshot of new poll page](https://github.com/bragamat/midterm-project/blob/master/public/Images/Initiate_new_poll.png)
+!["Screenshot of contact us page](https://github.com/bragamat/midterm-project/blob/master/public/Images/Contact_us.png)
 
 
 # Node Skeleton
