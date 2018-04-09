@@ -1,14 +1,7 @@
-# Node Skeleton
+# Decision Maker Project - Chill Poll
 
-## Project Setup
+A web app called Chill Poll that helps groups of friends to vote on a preferred choice (Ranked voting algorithm) using HTML, CSS, JS, jQuery, EJS and AJAX front-end skills, and Node, Express, Knex and PostgreSQL back-end skills.
 
-1. Create your own empty repo on GitHub
-2. Clone this repository (do not fork)
-  - Suggestion: When cloning, specify a different folder name that is relevant to your project
-3. Remove the git remote: `git remote rm origin`
-4. Add a remote for your origin: `git remote add origin <your github repo URL>`
-5. Push to the new origin: `git push -u origin master`
-6. Verify that the skeleton code now shows up in your repo on GitHub
 
 ## Getting Started
 
@@ -27,3 +20,35 @@
 
 - Node 5.10.x or above
 - NPM 3.8.x or above
+- body-parser
+- dotenv
+- ejs
+- express
+- knex
+- knex-logger
+- mailgun-js
+- morgan
+- node-sass-middleware
+- pg
+
+## Screenshots
+!["Screenshot of landing page]()
+!["Screenshot of poll wall]()
+!["Screenshot of voting page]()
+!["Screenshot of results page]()
+!["Screenshot of new poll page]()
+!["Screenshot of contact us page]()
+
+
+# Node Skeleton
+
+## Project Setup
+
+1. Create your own empty repo on GitHub
+2. Clone this repository (do not fork)
+  - Suggestion: When cloning, specify a different folder name that is relevant to your project
+3. Remove the git remote: `git remote rm origin`
+4. Add a remote for your origin: `git remote add origin <your github repo URL>`
+5. Push to the new origin: `git push -u origin master`
+6. Verify that the skeleton code now shows up in your repo on GitHub
+
