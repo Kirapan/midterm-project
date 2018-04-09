@@ -30,7 +30,7 @@ $(() => {
         data: $.param(pointsArray)
     }).done(function (data){
       console.log("ok!");
-      window.location.href = `/api/polls/result/${result_id}`;
+      window.location.href = `/api/polls/results/${result_id}`;
     })
   })
 })

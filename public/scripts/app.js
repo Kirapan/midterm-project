@@ -9,18 +9,6 @@ $(document).ready(() => {
     return `<div class="drop" point="${point}">Rank ${i}</div>`
   }
 
-  const getPollinfor = (poll) => {
-    $("div.options").append(`
-<label for="exampleInputEmail1"> Your title is</label>
-<input type="text" class="form-control" id="pollTitle"
-aria-describedby="emailHelp" placeholder="Enter the Title"
-value="${pollid.name}"><label for="exampleInputEmail1">
-Your Email address</label><input type="email" class="form-control"
-id="useremail" aria-describedby="emailHelp" value="${pollid.email}">
-<br/><label for="inputOption">Option ${pollid.optionid}</label>
-<input type="option" id="input${pollid.optionid}" class="form-control"
-placeholder="What are your options ?"></div></div></div>`)
-  }
 
   //Deleting a poll
   // ...
@@ -28,7 +16,7 @@ placeholder="What are your options ?"></div></div></div>`)
   const generateDiv = (poll) => {
     $("div.features").append(`<div class="col-md-3 col-sm-6 hero-feature">
 <div class="thumbnail">
-<img src="http://placehold.it/800x500" alt="">
+<img src="https://source.unsplash.com/1600x900/?${poll.pollname}" alt="">
 <div class="caption">
 <a href="/api/polls/results/${poll.poll_id}" pollid="${poll.poll_id}" optionid="${poll.id}" rank="${poll.options[0].rank}"><h3>${poll.pollname}</h3></a>
 </div>
@@ -54,7 +42,8 @@ placeholder="What are your options ?"></div></div></div>`)
   function input(number) {
     return `input${number}`;
   }
-  $("#addOption").on('click', function () {
+  $("#addOption").on('click', function (event) {
+    event.preventDefault();
     let checkinField = $(`#${input(i)}`).val();
     // option.push(checkinField);
     checkinField.length > 0 && option.push(checkinField);
@@ -68,9 +57,10 @@ placeholder="What are your options ?">`);
     }
   });
 
-  $("#removeOption").on('click', function () {
-    if (!$('.toDelete:last').length) {
-      alert("Nothing to delete!");
+  $("#removeOption").on('click', function (event) {
+    event.preventDefault();
+    if (!$('.toDelete:last').length || $('.toDelete').length <=1) {
+      alert("A poll needs at least 2 options!");
     } else {
       $('.toDelete:last').remove();
       $('.alsotoDelete:last').remove();
@@ -84,6 +74,7 @@ placeholder="What are your options ?">`);
     option.push($(`#input${i}`).val());
     let title = $("#pollTitle").val();
     let userEmail = $("#useremail").val();
+    let size = $('.toDelete').size();
 
     let pollInfo = {
       name: title,
@@ -91,13 +82,13 @@ placeholder="What are your options ?">`);
       options: option
     };
 
-    if (!pollInfo.name || !pollInfo.email || !pollInfo.options) {
+    if (!pollInfo.name || !pollInfo.email || !pollInfo.options || !$(`#input${i}`).val()) {
       alert("Your information is incomplete!")
-    } else {
+    } 
+    else {
       if (!useremail) {
         alert("Hey, We need your email!");
-      }
-      console.log(pollInfo)
+      } 
       $.ajax({
         method: "POST",
         url: "/api/polls/new",
