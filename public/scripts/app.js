@@ -12,16 +12,15 @@ $(document).ready(() => {
   // ...
   //Creating all the polls and sending to the index.ejs
   const generateDiv = (poll) => {
-    $("div.features").append(`<div class="col-md-3 col-sm-6 hero-feature">
-      <div class="thumbnail">
-        <img src="http://placehold.it/800x500" alt="">
-          <div class="caption">
-           <a href="/api/polls/results/${poll.poll_id}" pollid="${poll.poll_id}" optionid="${poll.id}" rank="${poll.options[0].rank}"><h3>${poll.pollname}</h3></a>
-           <a href="/api/polls/edit/${poll.poll_id}" class="btn btn-primary">Edit</a>
-           <a href="/api/polls/votes/${poll.poll_id}" class="btn btn-default">Vote</a>
-          </div>
-        </div>
-      </div>`);
+    $("div.features").append(`<div class="col-md-6 col-sm-12 hero-feature">
+<div class="thumbnail">
+<img src="https://source.unsplash.com/1600x900/?${poll.pollname}" alt="">
+<div class="caption">
+<a href="/api/polls/results/${poll.poll_id}" pollid="${poll.poll_id}" optionid="${poll.id}" rank="${poll.options[0].rank}"><h3>${poll.pollname}</h3></a>
+<a href="/api/polls/edit/${poll.poll_id}" class="btn btn-primary">Edit</a>
+</div>
+</div>
+</div>`);
   }
   //Rendering the Polls on the index.ejs
   $(() => {
@@ -29,6 +28,7 @@ $(document).ready(() => {
       method: "GET",
       url: "/api/polls/all"
     }).done((polls) => {
+      polls.reverse();
       polls.forEach((poll) => {
         generateDiv(poll);
       })
