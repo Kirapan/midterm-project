@@ -92,7 +92,16 @@ let optionEmail = [];
 
     if (!pollInfo.name || !pollInfo.email || !pollInfo.options) {
       alert("Your information is incomplete!")
-    } else {
+    } else if(option.length < 2){
+      // alert("at least 2"); // Change to flash message
+     $(function() {
+     $('#opMin').delay(500).fadeIn('normal', function() {
+              $(this).delay(2500).fadeOut();
+           });
+        });
+      option.pop();
+    } 
+    else {
       if (!useremail) {
         alert("Hey, We need your email!");
       }
@@ -132,7 +141,7 @@ $("#addEmail").on('click', function(event) {
 
 $("#removeEmail").on('click', function (event) {
     event.preventDefault();
-    alert("delete button")
+    // alert("delete button")
     if (!$(`#email${iE}`).val()) {
       alert("Nothing to delete!");
     } else {
