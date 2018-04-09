@@ -1,6 +1,5 @@
 
 $(document).ready(() => {
-
   //voting page
   function createVote(id, content) {
     return `<div class="drag" option_id="${id}">${content}</div>`
@@ -14,11 +13,12 @@ $(document).ready(() => {
   // ...
   //Creating all the polls and sending to the index.ejs
   const generateDiv = (poll) => {
-    $("div.features").append(`<div class="col-md-3 col-sm-6 hero-feature">
+    $("div.features").append(`<div class="col-md-6 col-sm-12 hero-feature">
 <div class="thumbnail">
 <img src="https://source.unsplash.com/1600x900/?${poll.pollname}" alt="">
 <div class="caption">
 <a href="/api/polls/results/${poll.poll_id}" pollid="${poll.poll_id}" optionid="${poll.id}" rank="${poll.options[0].rank}"><h3>${poll.pollname}</h3></a>
+<a href="/api/polls/edit/${poll.poll_id}" class="btn btn-primary">Edit</a>
 </div>
 </div>
 </div>`);
@@ -29,6 +29,7 @@ $(document).ready(() => {
       method: "GET",
       url: "/api/polls/all"
     }).done((polls) => {
+      polls.reverse();
       polls.forEach((poll) => {
         generateDiv(poll);
       })
@@ -36,11 +37,14 @@ $(document).ready(() => {
   });
 
   //Creating a new poll
-  let i = 1;
+  let i = 2;
   var option = [];
   //Adding options to the poll
   function input(number) {
     return `input${number}`;
+  }
+   function email(iE) {
+    return `email${iE}`;
   }
   $("#addOption").on('click', function (event) {
     event.preventDefault();
@@ -50,16 +54,14 @@ $(document).ready(() => {
     if (!checkinField) {
       alert("Cmon man, that one is empty!! why do you need more ?...");
     } else {
-      $(".askButton").before(`<br/><label for="inputOption" class="alsotoDelete">Option ${1 + i}</label>
-<input type="option"
-id="${input(++i)}" class="form-control toDelete"
-placeholder="What are your options ?">`);
+      $(".askButton").before(`<br/><label for="inputOption" class="alsotoDelete" style="font-size: 15px;">Option ${1 + i}</label>
+<input type="option" id="${input(++i)}" class="form-control toDelete" placeholder="What are your options ?">`);
     }
   });
 
   $("#removeOption").on('click', function (event) {
     event.preventDefault();
-    if (!$('.toDelete:last').length || $('.toDelete').length <=1) {
+    if (!$('.toDelete:last').length || $('.toDelete').length <=0) {
       alert("A poll needs at least 2 options!");
     } else {
       $('.toDelete:last').remove();
@@ -74,7 +76,7 @@ placeholder="What are your options ?">`);
     option.push($(`#input${i}`).val());
     let title = $("#pollTitle").val();
     let userEmail = $("#useremail").val();
-    let size = $('.toDelete').size();
+    
 
     let pollInfo = {
       name: title,
@@ -105,5 +107,48 @@ placeholder="What are your options ?">`);
     event.preventDefault();
     $("#formPoll").slideToggle();
   });
+
+
+let iE = 1;
+let optionEmail = [];
+
+$("#addEmail").on('click', function(event) {
+    event.preventDefault();
+    // alert("checkinField")
+    let checkinFieldEmail = $(`#${email(iE)}`).val();
+    checkinFieldEmail.length > 0 && optionEmail.push(checkinFieldEmail);
+    if (!checkinFieldEmail) {
+      alert("Cmon man, that one is empty!! why do you need more ?...");
+    } else {
+      $(this).before(`<br/><label for="inputEmail" id="${email(iE+1)}id">Email ${1 + iE}</label>
+       <input type="email" 
+      id="${email(++iE)}" class="form-control" 
+      placeholder="Which friends ?">`);
+    }
+  });
+
+$("#removeEmail").on('click', function (event) {
+    event.preventDefault();
+    alert("delete button")
+    if (!$(`#email${iE}`).val()) {
+      alert("Nothing to delete!");
+    } else {
+      $(`#email${iE}`).remove();
+      $(`#email${iE}id`).remove();
+      checkinFieldEmail = $(`#${email(--iE)}`).val();
+      optionEmail.pop();
+    }
+  });
+
+
+
+
+
+
+
+
+
+
+
 
 })

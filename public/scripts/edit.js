@@ -43,8 +43,9 @@ value="${option.name}"><br/>`);
   function input(number) {
     return `input${number}`;
   }
-  $("#addOption").on('click', function () {
-    let checkinField = $(`.${input(i)}`).val();
+  $("#addOption").on('click', function (event) {
+    event.preventDefault();
+    let checkinField = $('.input1:last').val();
     if (!checkinField) {
       alert("Please fill in the empty option first!");
     } else {
@@ -56,7 +57,8 @@ placeholder="What are your options ?">`);
     }
   });
 
-  $("#removeOption").on('click', function () {
+  $("#removeOption").on('click', function (event) {
+    event.preventDefault();
     if ($('.input1').length <= 2) {
       alert('A poll needs at least 2 options');
     } else {

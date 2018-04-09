@@ -1,11 +1,13 @@
 
 $(() => {
   $('.drag').draggable();
+  $('.voteDrag').draggable();
   let dropCounter = $('#votescontainer').find('.drag').length;
   let pointsArray = [];
   $('.drop').droppable({
     drop: function (event, ui) {
-      $(this).text('dropped');
+      // $(this).text('VOTED');
+      $(this).text('VOTED').attr("style","background-color: green;  height: 60px;");
       let points = $(this).attr('points');
       $(ui.draggable).attr('points', points);
       dropCounter--;
