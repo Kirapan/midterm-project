@@ -114,7 +114,10 @@ let optionEmail = [];
         .done((result) => {
           let id = result[0];
           window.location.href = `/api/polls/votes/${id}`
+          pollInfo.url = `/api/polls/votes/${id}`
         });
+
+        console.log("POLLINFO",pollInfo);
     }
   });
 
