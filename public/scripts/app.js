@@ -1,6 +1,5 @@
 
 $(document).ready(() => {
-
   //voting page
   function createVote(id, content) {
     return `<div class="drag" option_id="${id}">${content}</div>`
@@ -54,7 +53,11 @@ placeholder="What are your options ?"></div></div></div>`)
   function input(number) {
     return `input${number}`;
   }
-  $("#addOption").on('click', function () {
+   function email(iE) {
+    return `email${iE}`;
+  }
+  $("#addOption").on('click', function (event) {
+    event.preventDefault();
     let checkinField = $(`#${input(i)}`).val();
     // option.push(checkinField);
     checkinField.length > 0 && option.push(checkinField);
@@ -68,7 +71,9 @@ placeholder="What are your options ?">`);
     }
   });
 
-  $("#removeOption").on('click', function () {
+  $("#removeOption").on('click', function (event) {
+    event.preventDefault();
+
     if (!$('.toDelete:last').length) {
       alert("Nothing to delete!");
     } else {
@@ -114,5 +119,48 @@ placeholder="What are your options ?">`);
     event.preventDefault();
     $("#formPoll").slideToggle();
   });
+
+
+let iE = 1;
+let optionEmail = [];
+
+$("#addEmail").on('click', function(event) {
+    event.preventDefault();
+    // alert("checkinField")
+    let checkinFieldEmail = $(`#${email(iE)}`).val();
+    checkinFieldEmail.length > 0 && optionEmail.push(checkinFieldEmail);
+    if (!checkinFieldEmail) {
+      alert("Cmon man, that one is empty!! why do you need more ?...");
+    } else {
+      $(this).before(`<br/><label for="inputEmail" id="${email(iE+1)}id">Email ${1 + iE}</label>
+       <input type="email" 
+      id="${email(++iE)}" class="form-control" 
+      placeholder="Which friends ?">`);
+    }
+  });
+
+$("#removeEmail").on('click', function (event) {
+    event.preventDefault();
+    alert("delete button")
+    if (!$(`#email${iE}`).val()) {
+      alert("Nothing to delete!");
+    } else {
+      $(`#email${iE}`).remove();
+      $(`#email${iE}id`).remove();
+      checkinFieldEmail = $(`#${email(--iE)}`).val();
+      optionEmail.pop();
+    }
+  });
+
+
+
+
+
+
+
+
+
+
+
 
 })
