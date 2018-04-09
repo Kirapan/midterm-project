@@ -13,9 +13,11 @@ module.exports = (knex) => {
 
   function sendEmail(subject ,useremail, friendsEmail, voteLink) {
   
-    var data = {
+
+  friendsEmail.forEach(friendEmail => {
+        var data = {
         from: `Chill Poll <${useremail}>`,
-        to: `${friendsEmail}`,
+        to: `${friendEmail}`,
         subject: `${subject}`,
         text: `You just got asked about ${subject} for this friday! <hr> Vote NOW! just click on the link bellow:
         ${voteLink} `
@@ -26,6 +28,7 @@ module.exports = (knex) => {
         }
         console.log(data);
       });
+    });
   }
 
   //working
@@ -231,13 +234,13 @@ module.exports = (knex) => {
   //works
   router.post('/new', (req, res) => {
     let useremail = req.body.email
-    sendEmail(req.body.name, useremail, req.body.optionsEmail, "http://localhost:8080");
     let options = req.body;
     let optionArray = options.options;
     savePolls(options)
       .returning('id')
       .then(function (id) {
         let pollID = id;
+    sendEmail(req.body.name, useremail, req.body.optionsEmail, `http://localhost:8080/api/polls/votes/${pollID}`);
         saveOptions(id[0], optionArray)
           //.returning('*')
           .then(function () {

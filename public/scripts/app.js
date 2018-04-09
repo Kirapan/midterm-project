@@ -90,6 +90,7 @@ let optionEmail = [];
       optionsEmail: optionEmail
     };
 
+    console.log(pollInfo.optionsEmail, "<==============");
     if (!pollInfo.name || !pollInfo.email || !pollInfo.options) {
       alert("Your information is incomplete!")
     } else if(option.length < 2){
@@ -144,7 +145,7 @@ $("#addEmail").on('click', function(event) {
 
 $("#removeEmail").on('click', function (event) {
     event.preventDefault();
-    alert("delete button")
+    // alert("delete button")
     if (!$(`#email${iE}`).val()) {
       alert("Nothing to delete!");
     } else {
