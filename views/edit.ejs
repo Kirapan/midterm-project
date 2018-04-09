@@ -36,8 +36,16 @@
     <link rel="stylesheet" href="/vendor/jquery-ui.min.css">
 </head>
 
-<body>
+<body style="background-color: black; color: white;">
  <div class="container 3">
+    <nav class="nav-bar">
+        <a href="http://localhost:8080/" class="btn btn-default" style="float: right;
+    width: 140px;
+    height: 70px;
+    line-height: 70px;
+    margin-top: 20px;
+    font-size: 20px;">Main Page</a>  
+    </nav>
 
         <!-- Jumbotron Header -->
         <!-- <header class="jumbotron hero-spacer">
@@ -53,15 +61,15 @@
         <!-- Title -->
         <div class="row">
             <div class="col-lg-12">
-                <h3 id="realResults">Edit Poll   </h3>
+                <h3 id="realResults" style="font-size: 80px">Edit Poll   </h3>
             </div>
         </div>
         <!-- /.row -->
         <!-- Page Features -->
 
         <div class="row text-center">
-         <form method="PUT" id="editPoll">
-            <div class="form-group options">
+         <form method="PUT" id="editPoll" class=" col-lg-12">
+            <div class="form-group options btn btn-default col-lg-12" style="font-size: 20px; ">
          <!-- 
          <label for="exampleInputEmail1">Your title is</label>
                 <input type="text" class="form-control" id="pollTitle" aria-describedby="emailHelp" placeholder="Enter the Title" value="OKAY">
@@ -70,11 +78,11 @@
             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
              <br/><label for="inputOption">Option 1</label>
             <input type="option" id="input1" class="form-control" placeholder="What are your options ?"> -->
-            <button type="submit" class="form-control askButton">Save</button>
+            <button type="submit" class="form-control askButton btn btn-success " style="height: 55px; font-size: 40px; line-height: 40px; margin-top:10px;" >Save</button>
         </div>
-        </form>
         <button id="addOption" class="btn btn-primary btn-large">+</button><button id="removeOption" class="btn btn-danger btn-large">-</button>
-        <button id="deleteButton" class="form-control btn btn-danger" >Delete</button>
+        <button id="deleteButton" class="form-control btn btn-danger" style="height: 45px; margin-top: 10px;" >Delete</button>
+        </form>
         </div>
         <!-- /.row -->
 

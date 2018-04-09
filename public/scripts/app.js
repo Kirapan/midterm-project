@@ -8,7 +8,6 @@ $(document).ready(() => {
     return `<div class="drop" point="${point}">Rank ${i}</div>`
   }
 
-
   //Deleting a poll
   // ...
   //Creating all the polls and sending to the index.ejs
@@ -37,7 +36,7 @@ $(document).ready(() => {
   });
 
   //Creating a new poll
-  let i = 2;
+  let i = 1;
   var option = [];
   //Adding options to the poll
   function input(number) {
@@ -54,15 +53,18 @@ $(document).ready(() => {
     if (!checkinField) {
       alert("Cmon man, that one is empty!! why do you need more ?...");
     } else {
-      $(".askButton").before(`<br/><label for="inputOption" class="alsotoDelete" style="font-size: 15px;">Option ${1 + i}</label>
-<input type="option" id="${input(++i)}" class="form-control toDelete" placeholder="What are your options ?">`);
+      $(".askButton").before(`<br/><label for="inputOption" class="alsotoDelete">Option ${1 + i}</label>
+<input type="option"
+id="${input(++i)}" class="form-control toDelete"
+placeholder="What are your options ?">`);
     }
   });
 
   $("#removeOption").on('click', function (event) {
     event.preventDefault();
-    if (!$('.toDelete:last').length || $('.toDelete').length <=0) {
-      alert("A poll needs at least 2 options!");
+
+    if (!$('.toDelete:last').length) {
+      alert("Nothing to delete!");
     } else {
       $('.toDelete:last').remove();
       $('.alsotoDelete:last').remove();
@@ -71,26 +73,39 @@ $(document).ready(() => {
     }
   });
 
+let iE = 1;
+let optionEmail = [];
+
   $("#newPoll").on('submit', (event) => {
     event.preventDefault();
     option.push($(`#input${i}`).val());
+    optionEmail.push($(`#email${iE}`).val());
     let title = $("#pollTitle").val();
     let userEmail = $("#useremail").val();
-    
 
     let pollInfo = {
       name: title,
       email: userEmail,
-      options: option
+      options: option,
+      optionsEmail: optionEmail
     };
 
-    if (!pollInfo.name || !pollInfo.email || !pollInfo.options || !$(`#input${i}`).val()) {
+    if (!pollInfo.name || !pollInfo.email || !pollInfo.options) {
       alert("Your information is incomplete!")
+    } else if(option.length < 2){
+      // alert("at least 2"); // Change to flash message
+     $(function() {
+     $('#opMin').delay(500).fadeIn('normal', function() {
+              $(this).delay(2500).fadeOut();
+           });
+        });
+      option.pop();
     } 
     else {
       if (!useremail) {
         alert("Hey, We need your email!");
-      } 
+      }
+      console.log(pollInfo)
       $.ajax({
         method: "POST",
         url: "/api/polls/new",
@@ -108,9 +123,6 @@ $(document).ready(() => {
     $("#formPoll").slideToggle();
   });
 
-
-let iE = 1;
-let optionEmail = [];
 
 $("#addEmail").on('click', function(event) {
     event.preventDefault();

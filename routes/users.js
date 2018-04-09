@@ -8,6 +8,26 @@ const domain = 'sandboxc840785fd6244d16981cb9f613d95dca.mailgun.org';
 const mailgun = require('mailgun-js')({ apiKey: api_key, domain: domain });
 
 module.exports = (knex) => {
+  
+// sendingEmails
+
+  function sendEmail(subject ,useremail, friendsEmail, voteLink) {
+  
+    var data = {
+        from: `Chill Poll <${useremail}>`,
+        to: `${friendsEmail}`,
+        subject: `${subject}`,
+        text: `You just got asked about ${subject} for this friday! <hr> Vote NOW! just click on the link bellow:
+        ${voteLink} `
+      };
+      mailgun.messages().send(data, function (error, body) {
+        if (error) {
+          console.log(error)
+        }
+        console.log(data);
+      });
+  }
+
   //working
   function getPolls(id) {
     return knex
@@ -211,18 +231,7 @@ module.exports = (knex) => {
   //works
   router.post('/new', (req, res) => {
     let useremail = req.body.email
-    var data = {
-      from: `Chill Poll <${useremail}>`,
-      to: 'strangesm@gmail.com',
-      cc: 'mateuscbraga@gmail.com',
-      subject: 'What to do on this friday ? (Title of the poll)',
-      text: 'You just got asked about Netflix for this friday! (here will be the link to vote)'
-    };
-    mailgun.messages().send(data, function (error, body) {
-      if (error) {
-        console.log(error)
-      }
-    });
+    sendEmail(req.body.name, useremail, req.body.optionsEmail, "http://localhost:8080");
     let options = req.body;
     let optionArray = options.options;
     savePolls(options)
