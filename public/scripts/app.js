@@ -90,6 +90,7 @@ let optionEmail = [];
       optionsEmail: optionEmail
     };
 
+    console.log(pollInfo.optionsEmail, "<==============");
     if (!pollInfo.name || !pollInfo.email || !pollInfo.options) {
       alert("Your information is incomplete!")
     } else if(option.length < 2){
