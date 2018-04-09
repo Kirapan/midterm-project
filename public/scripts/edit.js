@@ -87,7 +87,6 @@ placeholder="What are your options ?">`);
     }
   });
 
-  //working
   $("#editPoll").on('submit', (event) => {
     event.preventDefault();
     if ($("#useremail").val() === $('#emailaddress').attr('data-email')) {

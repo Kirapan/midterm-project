@@ -10,7 +10,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Heroic Features - Start Bootstrap Template</title>
+<title>Chill Poll</title>
 
 <!-- Bootstrap Core CSS -->
 <link href="../public/styles/bootstrap.min.css" type="text/css">
@@ -67,9 +67,9 @@
               <br>
               <h2 class="intro-text">Make Collective Decisions While You Chill
                 <br><br></h2>
-                <a href="#download"><h3>==> Start a Poll now! <==</h3></a>
+                <a href="#download" id="startPoll" class="js-scroll-trigger" style="color: white; text-decoration: none;"><h3 id="startPoll">==> Start a Poll now! <==</h3></a>
               <a href="#about" class="btn btn-circle js-scroll-trigger">
-                <i class="fa fa-angle-double-down animated"></i>
+                <i class="fa fa-angle-double-down animated">-</i>
               </a>
             </div>
           </div>
@@ -102,7 +102,7 @@
 
         <!-- Jumbotron Header -->
         <header>
-            <h1>Having a hard time deciding where to go on a Friday night with your cool friends?</h1>
+            <h1 style="color: gold;">Having a hard time deciding where to go on a Friday night with your cool friends?</h1>
             <p>So, everything you need to do is:</p>
             <p>
                 <!-- <a class="btn btn-primary btn-large">I want to ask them!</a> -->
@@ -115,8 +115,17 @@
         <div class="row">
             <div class="col-lg-12">
                 <!-- <h3 id="realResults">New Poll</h3> -->
-                  <div id="opMin" style="display: none; background-color: red; color: white;"> 
+                  <div id="opMin" style="display: none; background-color: red; color: white; height: 40px; width: 100%; z-index: 10; line-height: 40px; font-size: 25px;"> 
                     You need at least 2 options
+                  </div>
+                  <div id="opAtleast" style="display: none; background-color: red; color: white; height: 40px; width: 100%; z-index: 10; line-height: 40px; font-size: 25px;"> 
+                    Why do you need more if the last is empty ?
+                  </div>
+                  <div id="opEmail" style="display: none; background-color: red; color: white; height: 40px; width: 100%; z-index: 10; line-height: 40px; font-size: 25px;"> 
+                    Hey, your information is not complete!
+                  </div>
+                  <div id="opFriendEmail" style="display: none; background-color: red; color: white; height: 40px; width: 100%; z-index: 10; line-height: 40px; font-size: 25px;"> 
+                   Cmon man, that one is empty!! why do you need more ?...
                   </div>
                 <div class="row text-center">
             <form method="POST" id="newPoll"  class="form-group col-lg-6">
@@ -169,8 +178,11 @@
           <div class="col-lg-8 mx-auto">
             <h1>Contact Us</h1>
             <p><br>Feel free to leave us a comment!</br>
-            <br><p>mateusbraga@gmail.com</p>
-            <p>pxqpxqpxq@hotmail.com</br></p>
+            <br>
+            <img src="/Images/M.jpeg" class="img-circle" style="width:150px; display: inline-block;">
+            <p>Founder</p>
+            <img src="/Images/pxq.jpg" class="img-circle" style="width:150px; display: inline-block;">
+            <p>Founder</p></br></p>
             <ul class="list-inline banner-social-buttons">
               <li class="list-inline-item">
                 <a href="https://twitter.com/SBootstrap" class="btn btn-default btn-lg">

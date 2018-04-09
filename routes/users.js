@@ -8,14 +8,11 @@ const domain = 'sandboxc840785fd6244d16981cb9f613d95dca.mailgun.org';
 const mailgun = require('mailgun-js')({ apiKey: api_key, domain: domain });
 
 module.exports = (knex) => {
-  
-// sendingEmails
 
-  function sendEmail(subject ,useremail, friendsEmail, voteLink) {
-  
-
-  friendsEmail.forEach(friendEmail => {
-        var data = {
+  // sendingEmails
+  function sendEmail(subject, useremail, friendsEmail, voteLink) {
+    friendsEmail.forEach(friendEmail => {
+      var data = {
         from: `Chill Poll <${useremail}>`,
         to: `${friendEmail}`,
         subject: `${subject}`,
@@ -31,7 +28,6 @@ module.exports = (knex) => {
     });
   }
 
-  //working
   function getPolls(id) {
     return knex
       .select('options.*', 'polls.name as pollname', 'polls.email as email')
@@ -63,7 +59,7 @@ module.exports = (knex) => {
         return polls;
       });
   }
-  //working
+
   function savePolls(data) {
     return knex('polls')
       .insert({
@@ -72,7 +68,7 @@ module.exports = (knex) => {
         created_at: new Date().toISOString()
       })
   }
-  //working
+
   function saveOptions(id, arr) {
     return new Promise(function (resolve, reject) {
       if (!arr || !id) {
@@ -92,7 +88,7 @@ module.exports = (knex) => {
       }
     });
   }
-  //working
+
   function deletePolls(id) {
     return knex
       .select()
@@ -100,7 +96,7 @@ module.exports = (knex) => {
       .where('id', "=", id)
       .delete()
   }
-  //working
+
   function deleteOptions(id) {
     return knex
       .select()
@@ -108,7 +104,7 @@ module.exports = (knex) => {
       .where('poll_id', "=", id)
       .delete()
   }
-  //working
+
   function findAndDelete(id, email) {
     return new Promise(function (resolve, reject) {
       knex
@@ -125,7 +121,6 @@ module.exports = (knex) => {
           }
           Promise.all(promises)
             .then(function () {
-              console.log('okkkkkk');
               return resolve();
             })
             .catch(function (err) {
@@ -137,7 +132,7 @@ module.exports = (knex) => {
         })
     })
   }
-  //working
+
   function findAndUpdateOptions(pollid, data) {
     return new Promise(function (resolve, reject) {
       knex
@@ -146,7 +141,6 @@ module.exports = (knex) => {
         .where('poll_id', "=", pollid)
         .delete()
         .then(function () {
-          console.log("data", data);
           var ququ = data.map((option => {
             return knex('options')
               .insert({ poll_id: pollid, name: option.optionname, rank: 0 })
@@ -162,10 +156,9 @@ module.exports = (knex) => {
         });
     })
   }
-  //working
+
   function rankUp(votes) {
     return new Promise(function (resolve, regject) {
-      console.log("before", votes);
       if (!votes) {
         return reject(err);
       }
@@ -184,7 +177,7 @@ module.exports = (knex) => {
       }
     })
   }
-  //works
+
   router.get("/all", (req, res) => {
     getPolls(req.params.id)
       .then((results) => {
@@ -195,7 +188,7 @@ module.exports = (knex) => {
       })
   });
 
-  //works
+
   router.get("/votes/:id", (req, res) => {
     knex
       .select('polls.name as pollsname', 'polls.id as pollid', 'options.name as optionsname', 'options.id as optionid')
@@ -203,16 +196,14 @@ module.exports = (knex) => {
       .rightOuterJoin('options', 'polls.id', '=', 'options.poll_id')
       .where('polls.id', req.params.id)
       .then((results) => {
-        console.log(results);
         let templateVars = { results: results };
         res.render("votes", templateVars);
       });
   });
-  //works
+
   router.post("/votes/:id", (req, res) => {
     rankUp(req.body)
       .then(function (result) {
-        console.log("resutl", result);
         res.redirect(`/api/polls/result/${req.params.id}`);
       })
       .catch(function (err) {
@@ -221,7 +212,7 @@ module.exports = (knex) => {
       })
 
   })
-  //works
+
   router.get('/result/:id', (req, res) => {
     getPolls(req.params.id)
       .then(function (output) {
@@ -231,7 +222,7 @@ module.exports = (knex) => {
         res.status(400).send(err);
       })
   })
-  //works
+
   router.post('/new', (req, res) => {
     let useremail = req.body.email
     let options = req.body;
@@ -240,7 +231,7 @@ module.exports = (knex) => {
       .returning('id')
       .then(function (id) {
         let pollID = id;
-    sendEmail(req.body.name, useremail, req.body.optionsEmail, `http://localhost:8080/api/polls/votes/${pollID}`);
+        sendEmail(req.body.name, useremail, req.body.optionsEmail, `http://localhost:8080/api/polls/votes/${pollID}`);
         saveOptions(id[0], optionArray)
           //.returning('*')
           .then(function () {
@@ -252,7 +243,7 @@ module.exports = (knex) => {
         res.status(400).send(err);
       })
   })
-  //working
+
   router.delete('/delete/:id', (req, res) => {
     findAndDelete(req.params.id, req.body.email)
       .then(function () {
@@ -262,17 +253,17 @@ module.exports = (knex) => {
         res.status(400).send(err);
       })
   })
-  //works
+
   router.get('/edit/:id', (req, res) => {
     getPolls(req.params.id)
       .then(function (result) {
-        res.render('edit'); // Rendering the edit page
+        res.render('edit');
       })
       .catch(function (err) {
         res.status(400).send(err);
       })
   })
-  //working
+
   router.put('/edit/:id', (req, res) => {
     console.log('datattt', req.body);
     knex('polls')
@@ -293,7 +284,7 @@ module.exports = (knex) => {
         res.status(400).send(err);
       })
   })
-  //working
+
   router.get("/results/:id", (req, res) => {
     res.render("results")
   })
